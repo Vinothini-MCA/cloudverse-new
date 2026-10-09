@@ -1,0 +1,2931 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CloudVerse - E.G.S. Pillay Engineering College</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+   
+    <script>
+        tailwind.config = {
+            darkMode: ['class', '[data-theme="dark"]'],
+            theme: {
+                extend: {
+                    colors: {
+                        skyBlue: '#0284C7',
+                        royalBlue: '#1D4ED8',
+                        darkPink: '#FF2E93',
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-15px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* LUXURY LIGHT THEME (Champagne, Gold & Obsidian) */
+        :root {
+            --bg-primary: #FAF9F6;
+            --bg-secondary: #F3F0E6;
+            --text-primary: #0F172A;
+            --text-secondary: #475569;
+            --accent: #B8860B;
+            --accent-hover: #996515;
+            --accent-glow: rgba(184, 134, 11, 0.25);
+            --glass-bg: rgba(255, 253, 248, 0.85);
+            --glass-border: rgba(212, 175, 55, 0.25);
+            --card-shadow: 0 12px 32px -8px rgba(15, 23, 42, 0.08);
+            --card-icon-bg: rgba(212, 175, 55, 0.12);
+            --card-icon-border: rgba(184, 134, 11, 0.3);
+            --input-bg: #FFFFFF;
+            --input-border: #E2D8C3;
+        }
+        /* DARK THEME (DEFAULT: NAVY + PINK/BLUE) */
+        [data-theme="dark"] {
+            --bg-primary: #0B0F19;
+            --bg-secondary: #111827;
+            --text-primary: #F8FAFC;
+            --text-secondary: #94A3B8;
+            --accent: #FF2E93;
+            --accent-hover: #E91E63;
+            --accent-glow: rgba(255, 46, 147, 0.3);
+            --glass-bg: rgba(17, 24, 39, 0.75);
+            --glass-border: rgba(255, 46, 147, 0.25);
+            --card-shadow: 0 10px 30px -10px rgba(255, 46, 147, 0.2);
+            --card-icon-bg: rgba(255, 46, 147, 0.1);
+            --card-icon-border: rgba(255, 46, 147, 0.3);
+            --input-bg: rgba(0, 0, 0, 0.5);
+            --input-border: #374151;
+        }
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            transition: background-color 0.4s ease, color 0.4s ease;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            overflow-x: hidden;
+        }
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--card-shadow);
+            transition: all 0.3s ease;
+        }
+        .text-gradient {
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .btn-accent {
+            background: linear-gradient(135deg, var(--accent) 0%, #D4AF37 100%);
+            color: #FFFFFF;
+            transition: all 0.3s ease;
+        }
+        [data-theme="dark"] .btn-accent {
+            background: linear-gradient(135deg, #FF2E93 0%, #9333EA 100%);
+        }
+        .btn-accent:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px var(--accent-glow);
+        }
+        .cloud-particle {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.15;
+            z-index: 0;
+            pointer-events: none;
+            animation: float 10s ease-in-out infinite alternate;
+        }
+        input, select, textarea {
+            background-color: var(--input-bg) !important;
+            border-color: var(--input-border) !important;
+            color: var(--text-primary) !important;
+        }
+
+        /* ================= EGS PILLAY AI CHATBOT ================= */
+        #egsChatbotRoot { position: fixed; right: 24px; bottom: 24px; z-index: 2147483000; width:58px; height:58px; font-family: inherit; }
+        #egsChatbotToggle {
+            width: 58px; height: 58px; border-radius: 9999px; border: 1px solid var(--glass-border);
+            background: linear-gradient(135deg, var(--accent) 0%, #D4AF37 100%);
+            color: #fff; box-shadow: 0 12px 30px var(--accent-glow);
+            display:flex; align-items:center; justify-content:center; cursor:pointer;
+            transition: transform .25s ease, box-shadow .25s ease;
+            position:relative;
+        }
+        [data-theme="dark"] #egsChatbotToggle { background: linear-gradient(135deg, #FF2E93 0%, #2563EB 100%); }
+        #egsChatbotToggle:hover { transform: translateY(-3px) scale(1.04); box-shadow: 0 16px 36px var(--accent-glow); }
+        #egsChatbotToggle:focus-visible, #egsChatbotPanel button:focus-visible, #egsChatbotInput:focus-visible {
+            outline: 3px solid color-mix(in srgb, var(--accent) 55%, transparent); outline-offset: 3px;
+        }
+        #egsChatbotToggle::after {
+            content:""; position:absolute; inset:-5px; border-radius:inherit;
+            border:2px solid var(--accent); opacity:.35; animation: egsChatPulse 2.2s ease-out infinite;
+            pointer-events:none;
+        }
+        @keyframes egsChatPulse { 0%{transform:scale(.92);opacity:.45} 70%,100%{transform:scale(1.25);opacity:0} }
+        #egsChatbotPanel {
+            position:absolute; right:0; bottom:70px; width:400px; height:min(620px, calc(100vh - 100px));
+            margin-bottom: 0; border-radius: 24px; overflow:hidden;
+            background: var(--glass-bg); color: var(--text-primary);
+            border:1px solid var(--glass-border); box-shadow: 0 24px 70px rgba(0,0,0,.30);
+            backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+            display:flex; flex-direction:column;
+            transform-origin: bottom right; opacity:0; transform:translateY(14px) scale(.96);
+            pointer-events:none; transition:opacity .22s ease, transform .22s ease;
+        }
+        #egsChatbotPanel.open { opacity:1; transform:translateY(0) scale(1); pointer-events:auto; }
+        .egs-chat-header {
+            padding:15px 16px; display:flex; align-items:center; gap:11px;
+            border-bottom:1px solid var(--glass-border);
+            background: linear-gradient(135deg, rgba(255,46,147,.10), rgba(37,99,235,.08));
+        }
+        .egs-chat-avatar {
+            width:40px;height:40px;border-radius:14px;flex:none;display:flex;align-items:center;justify-content:center;
+            background:linear-gradient(135deg,var(--accent),#2563EB);color:#fff;
+        }
+        .egs-chat-title { font-weight:800; font-size:14px; line-height:1.2; }
+        .egs-chat-subtitle { font-size:10px; color:var(--text-secondary); margin-top:3px; }
+        .egs-online { display:inline-flex; align-items:center; gap:4px; font-size:10px; color:#10b981; margin-top:3px; }
+        .egs-online-dot { width:6px;height:6px;border-radius:50%;background:#10b981; box-shadow:0 0 8px rgba(16,185,129,.7); }
+        .egs-chat-header-actions { margin-left:auto; display:flex; gap:5px; }
+        .egs-chat-icon-btn { width:34px;height:34px;border-radius:10px;background:transparent;color:var(--text-secondary);display:flex;align-items:center;justify-content:center; }
+        .egs-chat-icon-btn:hover { background:rgba(148,163,184,.12); color:var(--text-primary); }
+        #egsChatMessages { flex:1; overflow-y:auto; padding:15px; display:flex; flex-direction:column; gap:10px; scroll-behavior:smooth; }
+        .egs-chat-row { display:flex; align-items:flex-end; gap:7px; max-width:92%; }
+        .egs-chat-row.user { align-self:flex-end; flex-direction:row-reverse; }
+        .egs-chat-row.bot { align-self:flex-start; }
+        .egs-mini-avatar { width:27px;height:27px;border-radius:9px;flex:none;display:flex;align-items:center;justify-content:center;background:var(--card-icon-bg);color:var(--accent);border:1px solid var(--card-icon-border); }
+        .egs-chat-bubble { padding:10px 12px; border-radius:16px; font-size:12px; line-height:1.55; white-space:normal; word-break:break-word; }
+        .egs-chat-row.bot .egs-chat-bubble { background:rgba(148,163,184,.10); border:1px solid var(--glass-border); border-bottom-left-radius:5px; }
+        .egs-chat-row.user .egs-chat-bubble { background:linear-gradient(135deg,var(--accent),#2563EB); color:#fff; border-bottom-right-radius:5px; }
+        .egs-chat-bubble ul { margin:.35rem 0 .15rem 1rem; list-style:disc; }
+        .egs-chat-bubble p { margin:.15rem 0; }
+        .egs-quick-wrap { padding:0 15px 10px; display:flex; gap:6px; flex-wrap:wrap; }
+        .egs-quick-btn { font-size:10px; font-weight:700; padding:7px 9px; border-radius:10px; background:var(--card-icon-bg); border:1px solid var(--card-icon-border); color:var(--text-primary); cursor:pointer; }
+        .egs-quick-btn:hover { border-color:var(--accent); }
+        .egs-typing { display:inline-flex; align-items:center; gap:4px; }
+        .egs-typing span { width:5px;height:5px;border-radius:50%;background:var(--text-secondary);animation:egsTyping 1.2s infinite; }
+        .egs-typing span:nth-child(2){animation-delay:.15s}.egs-typing span:nth-child(3){animation-delay:.3s}
+        @keyframes egsTyping { 0%,60%,100%{transform:translateY(0);opacity:.45}30%{transform:translateY(-4px);opacity:1} }
+        .egs-source-link { display:inline-flex; margin-top:7px; font-size:10px; font-weight:700; color:var(--accent); text-decoration:underline; }
+        .egs-chat-input-wrap { padding:10px; border-top:1px solid var(--glass-border); display:flex; gap:7px; align-items:flex-end; background:rgba(0,0,0,.04); }
+        #egsChatbotInput { flex:1; min-height:42px; max-height:100px; resize:none; border-radius:13px; padding:10px 11px; font-size:12px; border:1px solid var(--input-border); background:var(--input-bg); color:var(--text-primary); }
+        #egsChatSendBtn { width:42px;height:42px;border-radius:13px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--accent),#2563EB);color:#fff;flex:none; }
+        #egsChatSendBtn:disabled { opacity:.5; cursor:not-allowed; }
+        @media (max-width: 640px) {
+            #egsChatbotRoot { right:12px; bottom:12px; }
+            #egsChatbotPanel { position:absolute; right:0; bottom:66px; width:calc(100vw - 24px); height:min(650px, calc(100vh - 100px)); }
+            #egsChatbotToggle { width:54px;height:54px; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            #egsChatbotToggle::after { animation:none; }
+            #egsChatbotPanel { transition:none; }
+            #egsChatMessages { scroll-behavior:auto; }
+        }
+        /* ================= END EGS PILLAY AI CHATBOT ================= */
+    </style>
+</head>
+<body class="relative min-h-screen flex flex-col justify-between">
+    <!-- Cloud Background Effect -->
+    <div class="cloud-particle w-96 h-96 bg-amber-400 top-10 left-[-100px] dark:bg-blue-500"></div>
+    <div class="cloud-particle w-[500px] h-[500px] bg-yellow-500 top-[40%] right-[-150px] dark:bg-sky-500" style="animation-delay: -3s;"></div>
+   
+    <!-- PERSISTENT HEADER & NAVIGATION -->
+    <header class="sticky top-0 z-40 w-full glass-panel px-4 lg:px-8 py-3">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <!-- Editable Site Logo -->
+            <div class="flex items-center gap-3 cursor-pointer group" onclick="handleSiteLogoClick(event)" role="button" tabindex="0" aria-label="View CloudVerse logo" onkeydown="if(event.key==='Enter' || event.key===' ') handleSiteLogoClick(event)">
+                <div class="relative w-11 h-11 rounded-xl overflow-hidden bg-pink-500/10 border-2 border-pink-500/30 shadow-lg">
+                    <img id="siteLogoImage" src="" alt="CloudVerse Logo" class="w-full h-full object-contain p-1.5 cursor-zoom-in" onclick="handleSiteLogoClick(event)">
+                    <button id="siteLogoEditBtn" type="button" onclick="event.stopPropagation(); openSiteLogoModal()" class="hidden absolute inset-0 bg-black/60 text-white items-center justify-center group-hover:flex" title="Edit Logo">
+                        <i data-lucide="pencil" class="w-4 h-4"></i>
+                    </button>
+                </div>
+                <div>
+                    <h1 class="text-xl font-extrabold tracking-wider text-gradient flex items-center gap-2">
+                        CloudVerse
+                    </h1>
+                    <p class="text-[10px] md:text-xs font-medium text-amber-800/60 dark:text-slate-400 leading-tight">
+                        E.G.S. Pillay Engineering College, Nagapattinam <span class="hidden sm:inline">| MCA Department</span>
+                    </p>
+                </div>
+            </div>
+           
+            <!-- Nav Links -->
+            <nav class="hidden md:flex items-center gap-6 font-medium text-sm text-slate-700 dark:text-slate-300">
+                <button onclick="navigateTo('home')" class="hover:text-amber-600 dark:hover:text-blue-500 transition-colors">Home</button>
+                <button onclick="navigateTo('about')" class="hover:text-amber-600 dark:hover:text-blue-500 transition-colors">About</button>
+                <button onclick="navigateTo('community')" class="hover:text-amber-600 dark:hover:text-blue-500 transition-colors">Community</button>
+                <button onclick="navigateTo('events')" class="hover:text-amber-600 dark:hover:text-blue-500 transition-colors">Events</button>
+                <button onclick="navigateTo('benefits')" class="hover:text-amber-600 dark:hover:text-blue-500 transition-colors">Benefits</button>
+                <button onclick="navigateTo('contact')" class="hover:text-amber-600 dark:hover:text-blue-500 transition-colors">Contact</button>
+                <button onclick="navigateTo('gallery')" class="hover:text-amber-600 dark:hover:text-blue-500 transition-colors flex items-center gap-1">
+                    <i data-lucide="image" class="w-4 h-4"></i> Gallery
+                </button>
+                <!-- Admin Details Nav Link (Only Visible to Admin) -->
+                <button id="adminDetailsNavLink" onclick="navigateTo('adminDetails')" class="hover:text-amber-600 dark:hover:text-blue-500 transition-colors hidden font-bold text-amber-600 dark:text-pink-500 flex items-center gap-1">
+                    <i data-lucide="table" class="w-4 h-4"></i> Details
+                </button>
+            </nav>
+           
+            <!-- Action Area: Theme Toggle & Dynamic Auth Controls -->
+            <div class="flex items-center gap-3">
+                <button id="themeToggle" class="p-2.5 rounded-xl glass-panel hover:scale-110 active:scale-95 transition-transform flex items-center justify-center" aria-label="Toggle Theme">
+                    <i data-lucide="sun" id="sunIcon" class="w-5 h-5 text-amber-500"></i>
+                    <i data-lucide="moon" id="moonIcon" class="w-5 h-5 text-blue-600 hidden"></i>
+                </button>
+               
+                <!-- User Auth Container (SignIn / Profile / Logout) -->
+                <div id="navAuthContainer"></div>
+            </div>
+        </div>
+    </header>
+
+
+    <!-- ================= EGS PILLAY AI CHATBOT ================= -->
+    <div id="egsChatbotRoot" aria-label="E.G.S. Pillay College AI Assistant">
+        <section id="egsChatbotPanel" role="dialog" aria-modal="false" aria-labelledby="egsChatTitle" aria-hidden="true">
+            <header class="egs-chat-header">
+                <div class="egs-chat-avatar" aria-hidden="true"><i data-lucide="bot" class="w-5 h-5"></i></div>
+                <div>
+                    <div id="egsChatTitle" class="egs-chat-title">E.G.S. Pillay College Assistant</div>
+                    <div class="egs-chat-subtitle">Ask me about E.G.S. Pillay Engineering College</div>
+                    <div class="egs-online"><span class="egs-online-dot"></span> Online</div>
+                </div>
+                <div class="egs-chat-header-actions">
+                    <button type="button" id="egsChatClearBtn" class="egs-chat-icon-btn" aria-label="Clear chat" title="Clear chat">
+                        <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+                    </button>
+                    <button type="button" id="egsChatCloseBtn" class="egs-chat-icon-btn" aria-label="Close chatbot" title="Close chatbot">
+                        <i data-lucide="x" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </header>
+            <div id="egsChatMessages" aria-live="polite" aria-label="Chat messages"></div>
+            <div id="egsChatQuickQuestions" class="egs-quick-wrap">
+                <button type="button" class="egs-quick-btn" data-question="Tell me about E.G.S. Pillay Engineering College.">About the College</button>
+                <button type="button" class="egs-quick-btn" data-question="What courses and departments are available at E.G.S. Pillay Engineering College?">Courses & Departments</button>
+                <button type="button" class="egs-quick-btn" data-question="What is the admission process at E.G.S. Pillay Engineering College?">Admissions</button>
+                <button type="button" class="egs-quick-btn" data-question="Tell me about placements at E.G.S. Pillay Engineering College.">Placements</button>
+                <button type="button" class="egs-quick-btn" data-question="What are the official contact details of E.G.S. Pillay Engineering College?">Contact Details</button>
+            </div>
+            <form id="egsChatForm" class="egs-chat-input-wrap">
+                <textarea id="egsChatbotInput" rows="1" maxlength="2000" placeholder="Ask about E.G.S. Pillay Engineering College..." aria-label="Ask about E.G.S. Pillay Engineering College"></textarea>
+                <button type="submit" id="egsChatSendBtn" aria-label="Send message" title="Send message">
+                    <i data-lucide="send" class="w-4 h-4"></i>
+                </button>
+            </form>
+        </section>
+        <button type="button" id="egsChatbotToggle" aria-label="Ask about E.G.S. Pillay Engineering College" aria-expanded="false" title="Ask about E.G.S. Pillay Engineering College">
+            <i data-lucide="message-circle" class="w-6 h-6"></i>
+        </button>
+    </div>
+    <!-- ================= END EGS PILLAY AI CHATBOT ================= -->
+
+    <!-- SPA MAIN VIEW CONTAINER -->
+    <main class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full">
+       
+        <!-- ================= HOME VIEW ================= -->
+        <div id="homeView" class="spa-view space-y-16">
+            
+<!-- Home Banner Image -->
+<div class="max-w-5xl mx-auto px-4 mb-8">
+    <img
+        src="images/cd.png"
+        alt="CloudVerse Student Cloud Network"
+        class="w-full h-auto max-h-80 object-contain rounded-2xl"
+    >
+</div>
+            <!-- Hero Section -->
+            <section id="home" class="pt-8 md:pt-16 text-center space-y-6">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-panel text-xs font-semibold tracking-wide uppercase">
+                    <i data-lucide="sparkles" class="w-4 h-4 text-amber-500"></i> Inter-College Student Cloud Network
+                </div>
+                <h1 class="text-4xl md:text-6xl font-black tracking-tight max-w-4xl mx-auto leading-tight">
+                    Connecting Cloud Enthusiasts <span class="text-gradient">Across Campuses</span>
+                </h1>
+                <p class="max-w-2xl mx-auto text-base md:text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
+                    A student-led cloud initiative by MCA Students of E.G.S. Pillay Engineering College, Nagapattinam. Hosting inter-city tech events, cloud workshops, and collaborative hands-on programs.
+                </p>
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+                    <button id="heroPrimaryBtn" onclick="handleHeroPrimaryAction()" class="w-full sm:w-auto px-8 py-3.5 rounded-xl font-bold text-base btn-accent shadow-md flex items-center justify-center gap-2">
+                        Join CloudVerse <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                    </button>
+                    <button onclick="navigateTo('events')" class="w-full sm:w-auto px-8 py-3.5 rounded-xl font-semibold text-base glass-panel hover:opacity-80 text-center">
+                        Explore Events
+                    </button>
+                </div>
+                <!-- Dynamic Counters Bar -->
+                <div class="pt-8 grid grid-cols-2 md:grid-cols-3 gap-6 max-w-3xl mx-auto">
+                    <div class="glass-panel p-6 rounded-2xl text-center">
+                        <h3 class="text-3xl md:text-4xl font-extrabold text-gradient" id="memberCounter">1,250+</h3>
+                        <p class="text-xs md:text-sm text-slate-600 dark:text-slate-400 mt-1 font-medium">Active Members</p>
+                    </div>
+                    <div class="glass-panel p-6 rounded-2xl text-center">
+                        <h3 class="text-3xl md:text-4xl font-extrabold text-gradient" id="eventCounter">0</h3>
+                        <p class="text-xs md:text-sm text-slate-600 dark:text-slate-400 mt-1 font-medium">Events Hosted</p>
+                    </div>
+                    <div class="col-span-2 md:col-span-1 glass-panel p-6 rounded-2xl text-center">
+                        <h3 class="text-3xl md:text-4xl font-extrabold text-gradient">15+</h3>
+                        <p class="text-xs md:text-sm text-slate-600 dark:text-slate-400 mt-1 font-medium">Partner Colleges</p>
+                    </div>
+                </div>
+            </section>
+           
+            <!-- FEATURED UPCOMING EVENT BANNER -->
+            <section class="space-y-4">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-xl font-extrabold text-gradient flex items-center gap-2">
+                        <i data-lucide="flame" class="w-5 h-5 text-amber-500"></i> Featured Upcoming Event
+                    </h2>
+                    <button onclick="navigateTo('events')" class="text-xs font-bold text-amber-600 dark:text-blue-500 hover:underline flex items-center gap-1">
+                        View All Events <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                    </button>
+                </div>
+                <div id="homeUpcomingHighlight"></div>
+            </section>
+           
+            <!-- Quick About Preview -->
+            <section class="glass-panel rounded-3xl p-8 md:p-12 relative overflow-hidden">
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <div class="space-y-4">
+                        <span class="text-amber-700 dark:text-pink-500 font-bold text-xs uppercase tracking-widest">About CloudVerse</span>
+                        <h2 class="text-3xl font-bold">Empowering Next-Gen Cloud Architects</h2>
+                        <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+                            CloudVerse is built to bridge the gap between academic learning and real-world enterprise cloud technology. Organized by the MCA Department at E.G.S. Pillay Engineering College, Nagapattinam.
+                        </p>
+                        <button onclick="navigateTo('about')" class="px-6 py-2.5 rounded-xl text-xs font-bold btn-accent inline-flex items-center gap-2">
+                            Read Full Proposal & Structure <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                    <div class="relative flex justify-center">
+                        <div class="w-full h-64 bg-amber-500/10 dark:bg-blue-500/10 rounded-2xl border border-amber-500/20 dark:border-blue-500/20 flex items-center justify-center p-6 text-center">
+                            <div class="space-y-3">
+                                <i data-lucide="cloud-lightning" class="w-16 h-16 text-amber-600 dark:text-pink-500 mx-auto animate-bounce"></i>
+                                <p class="font-bold text-lg">Cloud Infrastructure & DevOps</p>
+                                <p class="text-xs text-slate-500 dark:text-slate-400">AWS | Azure | Google Cloud Platform</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- LEADERSHIP & ADVISORS SLIDER SECTION -->
+            <section class="space-y-8 pt-8 border-t border-amber-900/10 dark:border-slate-800/65">
+                <div class="text-center space-y-2">
+                    <div id="leadershipHeaderContainer" class="relative group inline-block">
+                        <span id="leadershipTagText" class="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest bg-amber-500/10 text-amber-700 border border-amber-500/20 dark:bg-blue-500/10 dark:text-blue-500 dark:border-blue-500/20 cursor-pointer" onclick="promptEditLeadershipTag()">Leadership & Advisors Showcase</span>
+                        <button onclick="promptEditLeadershipTag()" class="absolute -top-3 -right-3 hidden group-hover:inline-flex bg-amber-600 dark:bg-pink-600 text-white p-1.5 rounded-full text-[10px] shadow-lg"><i data-lucide="edit" class="w-3 h-3"></i></button>
+                    </div>
+                    <div id="leadershipTitleContainer" class="relative group">
+                        <h2 id="leadershipTitleText" class="text-3xl md:text-4xl font-extrabold text-gradient cursor-pointer inline-block" onclick="promptEditLeadershipTitle()">Meet Our Core Team & Mentors</h2>
+                        <button onclick="promptEditLeadershipTitle()" class="absolute top-0 ml-2 hidden group-hover:inline-flex bg-amber-600 dark:bg-pink-600 text-white p-1.5 rounded-full text-[10px] shadow-lg"><i data-lucide="edit" class="w-3 h-3"></i></button>
+                    </div>
+                    <p class="text-xs md:text-sm text-slate-600 dark:text-slate-400">Automatically rotating profiles of our committee leaders and expert advisors.</p>
+                </div>
+               
+                <!-- Slider Container -->
+                <div class="relative max-w-xl mx-auto glass-panel p-8 rounded-3xl shadow-2xl overflow-hidden border-2 border-amber-500/30 dark:border-blue-500/30">
+                    <div id="leadershipSliderTrack" class="flex transition-transform duration-700 ease-in-out">
+                        <!-- Dynamically injected via JavaScript -->
+                    </div>
+                   
+                    <!-- Slider Navigation Indicators -->
+                    <div class="flex justify-center items-center gap-2 mt-6" id="sliderDotsContainer">
+                        <!-- Dynamically injected dots -->
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ================= BENEFITS VIEW ================= -->
+        <div id="benefitsView" class="spa-view hidden space-y-24 py-4">
+            <section class="text-left space-y-6 max-w-4xl pt-4">
+                <span class="text-xs font-bold uppercase tracking-widest text-amber-600 dark:text-pink-500">WHY CLOUDVERSE</span>
+                <h1 class="text-4xl md:text-6xl font-black text-slate-800 dark:text-slate-100 tracking-tight leading-tight">
+                    Build Skills. Explore Technology. Shape Your Future.
+                </h1>
+                <p class="text-slate-600 dark:text-slate-400 text-base md:text-lg leading-relaxed max-w-3xl">
+                    CLOUDVERSE provides students with continuous opportunities to learn emerging cloud technologies, gain hands-on experience, collaborate with peers and industry professionals, and build practical skills for future careers.
+                </p>
+            </section>
+            <hr class="border-amber-900/10 dark:border-slate-800/60 my-12">
+            <section class="space-y-10">
+                <div class="space-y-2">
+                    <span class="text-xs font-bold uppercase tracking-widest text-amber-600 dark:text-pink-500">Core Objectives</span>
+                    <h2 class="text-3xl font-extrabold text-gradient">Key Benefits</h2>
+                </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="glass-panel p-6 rounded-2xl space-y-3 flex flex-col justify-between hover:border-amber-500/50 dark:hover:border-blue-500/50 transition-colors">
+                        <div>
+                            <div class="w-10 h-10 rounded-xl mb-4 flex items-center justify-center" style="background: var(--card-icon-bg); border: 1px solid var(--card-icon-border);">
+                                <i data-lucide="cloud" class="w-5 h-5 text-amber-600 dark:text-pink-500"></i>
+                            </div>
+                            <h3 class="text-base font-bold text-slate-800 dark:text-slate-100">Cloud Computing Foundations</h3>
+                            <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed mt-2">Build a strong understanding of cloud concepts, architectures, services, and deployment models.</p>
+                        </div>
+                    </div>
+                    <div class="glass-panel p-6 rounded-2xl space-y-3 flex flex-col justify-between hover:border-amber-500/50 dark:hover:border-blue-500/50 transition-colors">
+                        <div>
+                            <div class="w-10 h-10 rounded-xl mb-4 flex items-center justify-center" style="background: var(--card-icon-bg); border: 1px solid var(--card-icon-border);">
+                                <i data-lucide="terminal" class="w-5 h-5 text-amber-600 dark:text-pink-500"></i>
+                            </div>
+                            <h3 class="text-base font-bold text-slate-800 dark:text-slate-100">Hands-on Cloud Experience</h3>
+                            <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed mt-2">Gain practical exposure to AWS, Microsoft Azure, Google Cloud, and other relevant cloud platforms.</p>
+                        </div>
+                    </div>
+                    <div class="glass-panel p-6 rounded-2xl space-y-3 flex flex-col justify-between hover:border-amber-500/50 dark:hover:border-blue-500/50 transition-colors">
+                        <div>
+                            <div class="w-10 h-10 rounded-xl mb-4 flex items-center justify-center" style="background: var(--card-icon-bg); border: 1px solid var(--card-icon-border);">
+                                <i data-lucide="cpu" class="w-5 h-5 text-amber-600 dark:text-pink-500"></i>
+                            </div>
+                            <h3 class="text-base font-bold text-slate-800 dark:text-slate-100">Industry-Relevant Skills</h3>
+                            <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed mt-2">Develop practical skills across deployment, virtualization, storage, networking, databases, containers, security, and cloud-native technologies.</p>
+                        </div>
+                    </div>
+                    <div class="glass-panel p-6 rounded-2xl space-y-3 flex flex-col justify-between hover:border-amber-500/50 dark:hover:border-blue-500/50 transition-colors">
+                        <div>
+                            <div class="w-10 h-10 rounded-xl mb-4 flex items-center justify-center" style="background: var(--card-icon-bg); border: 1px solid var(--card-icon-border);">
+                                <i data-lucide="sparkles" class="w-5 h-5 text-amber-600 dark:text-pink-500"></i>
+                            </div>
+                            <h3 class="text-base font-bold text-slate-800 dark:text-slate-100">AI & Cloud Innovation</h3>
+                            <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed mt-2">Explore AI/ML applications on cloud infrastructure and understand how emerging technologies are applied to real-world solutions.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ================= ABOUT VIEW ================= -->
+        <div id="aboutView" class="spa-view hidden space-y-12">
+            <div class="glass-panel p-8 rounded-3xl space-y-4 text-center">
+                <span class="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest bg-amber-500/10 text-amber-700 border border-amber-500/20 dark:bg-blue-500/10 dark:text-blue-500 dark:border-blue-500/20">Official Departmental Proposal</span>
+                <h1 class="text-3xl md:text-5xl font-black text-gradient">ABOUT CLOUDVERSE CLUB</h1>
+                <h2 class="text-xl md:text-2xl font-extrabold text-slate-800 dark:text-slate-200">"CLOUDVERSE CLUB"</h2>
+                <p class="text-sm md:text-base text-slate-600 dark:text-slate-400 max-w-3xl mx-auto">
+                    Department of Master of Computer Applications (MCA) <br>
+                    <strong>E.G.S. Pillay Engineering College (Autonomous), Nagapattinam</strong>
+                </p>
+                <p class="text-xs text-slate-500">(An Autonomous Institution Affiliated to Anna University, Chennai | Accredited by NAAC with 'A++' Grade)</p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="glass-panel p-6 md:p-8 rounded-3xl space-y-4">
+                    <h3 class="text-2xl font-bold flex items-center gap-2 text-gradient">
+                        <i data-lucide="file-text" class="text-amber-600 dark:text-blue-500"></i> Introduction & Background
+                    </h3>
+                    <p class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+                        Cloud Computing has become the backbone of modern IT infrastructure, digital transformation, software engineering, and artificial intelligence implementations globally.
+                    </p>
+                </div>
+                <div class="glass-panel p-6 md:p-8 rounded-3xl space-y-4">
+                    <h3 class="text-2xl font-bold flex items-center gap-2 text-gradient">
+                        <i data-lucide="eye" class="text-amber-600 dark:text-blue-500"></i> Club Vision & Mission
+                    </h3>
+                    <p class="text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
+                        To establish a center of excellence in student cloud innovation, producing industry-ready cloud practitioners, DevOps engineers, and solutions architects.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= COMMUNITY VIEW ================= -->
+        <div id="communityView" class="spa-view hidden space-y-10">
+            <div class="glass-panel p-8 rounded-3xl text-center space-y-3 relative overflow-hidden">
+                <div class="flex justify-between items-center mb-4">
+                    <span class="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest bg-amber-500/10 text-amber-700 border border-amber-500/20 dark:bg-blue-500/10 dark:text-blue-500 dark:border-blue-500/20">Official CloudVerse Network</span>
+                    <button id="adminAddMemberBtn" onclick="openMemberCrudModal()" class="px-4 py-2 rounded-xl text-xs font-bold btn-accent hidden flex items-center gap-1.5">
+                        <i data-lucide="user-plus" class="w-4 h-4"></i> Add Member
+                    </button>
+                </div>
+                <h1 class="text-3xl md:text-5xl font-black text-gradient">Club Community & Team</h1>
+                <p class="text-sm text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+                    Meet the core driving members, office bearers, faculty conveners, and industry advisors of CloudVerse MCA.
+                </p>
+                <div class="pt-2">
+                    <span class="inline-flex items-center gap-2 px-4 py-2 rounded-xl glass-panel text-sm font-bold text-amber-700 dark:text-blue-400">
+                        <i data-lucide="users" class="w-4 h-4"></i> Total Active Members: <span id="communityMemberCountDisplay" class="text-gradient">1,250+</span>
+                    </span>
+                </div>
+            </div>
+            <div class="space-y-6">
+                <div class="flex justify-between items-center border-b border-amber-900/10 dark:border-slate-700/40 pb-3">
+                    <h2 class="text-2xl font-bold text-gradient">Leadership & Leadership Advisors</h2>
+                </div>
+                <div id="communityMembersGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+            </div>
+        </div>
+
+        <!-- ================= EVENTS VIEW ================= -->
+        <div id="eventsView" class="spa-view hidden space-y-8">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 glass-panel p-6 rounded-3xl">
+                <div>
+                    <h1 class="text-3xl font-extrabold text-gradient">Programs & Technical Events</h1>
+                    <p class="text-xs md:text-sm text-slate-600 dark:text-slate-400 mt-1">Explore cloud workshops, inter-city hackathons, and past webinars.</p>
+                </div>
+                <div id="adminEventActionBtnContainer"></div>
+            </div>
+            <div class="flex justify-center gap-4 border-b border-amber-900/10 dark:border-slate-700/30 pb-4">
+                <button onclick="switchEventsTab('upcoming')" id="tabUpcomingBtn" class="px-6 py-2.5 rounded-xl font-bold text-sm btn-accent shadow-md">
+                    Upcoming Events
+                </button>
+                <button onclick="switchEventsTab('past')" id="tabPastBtn" class="px-6 py-2.5 rounded-xl font-bold text-sm glass-panel">
+                    Past Events
+                </button>
+            </div>
+            <div id="eventsListContainer" class="space-y-6"></div>
+        </div>
+
+        <!-- ================= CONTACT VIEW ================= -->
+        <div id="contactView" class="spa-view hidden space-y-10">
+            <div class="glass-panel p-8 rounded-3xl text-center space-y-3">
+                <span class="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest bg-amber-500/10 text-amber-700 border border-amber-500/20 dark:bg-blue-500/10 dark:text-blue-500 dark:border-blue-500/20">Get In Touch</span>
+                <h1 class="text-3xl md:text-5xl font-black text-gradient">Contact CloudVerse Team</h1>
+                <p class="text-sm text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">Have questions or want to collaborate with our student chapter? Reach out to us anytime.</p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="glass-panel p-8 rounded-3xl space-y-6">
+                    <div class="flex justify-between items-center border-b border-amber-900/10 dark:border-slate-700/40 pb-3">
+                        <h3 class="text-2xl font-bold text-gradient">Department Information</h3>
+                        <button id="adminEditContactBtn" onclick="openContactCrudModal()" class="px-3 py-1 rounded-lg text-xs font-bold btn-accent hidden flex items-center gap-1">
+                            <i data-lucide="edit" class="w-3.5 h-3.5"></i> Edit Contact
+                        </button>
+                    </div>
+                    <div class="space-y-4 text-sm text-slate-700 dark:text-slate-300">
+                        <div class="flex items-start gap-3">
+                            <i data-lucide="map-pin" class="w-5 h-5 text-amber-600 dark:text-blue-500 shrink-0 mt-1"></i>
+                            <div>
+                                <p class="font-bold">E.G.S. Pillay Engineering College (Autonomous)</p>
+                                <p class="text-xs text-slate-500 dark:text-slate-400">Department of MCA, Nagapattinam, Tamil Nadu - 611002</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="phone" class="w-5 h-5 text-amber-600 dark:text-blue-500 shrink-0"></i>
+                            <p id="displayContactPhone">+91 9944395848</p>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="mail" class="w-5 h-5 text-amber-600 dark:text-blue-500 shrink-0"></i>
+                            <p id="displayContactEmail">cloudverse@gmail.com</p>
+                        </div>
+                        <div class="flex items-center gap-3 pt-2">
+                            <i class="fa-brands fa-linkedin text-lg text-amber-600 dark:text-blue-500"></i>
+                            <a id="displayContactLinkedin" href="https://linkedin.com" target="_blank" class="text-xs underline hover:text-amber-500">linkedin.com/company/cloudverse</a>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="fa-brands fa-whatsapp text-lg text-emerald-500"></i>
+                            <a id="displayContactWhatsapp" href="https://chat.whatsapp.com" target="_blank" class="text-xs underline hover:text-emerald-500">WhatsApp Group Link</a>
+                        </div>
+                        <div class="flex items-center gap-3">
+    <i class="fa-brands fa-instagram text-lg text-purple-500"></i>
+    <a id="displayContactInstagram" href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" class="text-xs underline hover:text-purple-500">instagram.com/cloudverse</a>
+</div>
+                    </div>
+                </div>
+                <form onsubmit="handleContactSubmit(event)" class="glass-panel p-8 rounded-3xl space-y-4">
+                    <h3 class="text-2xl font-bold text-gradient">Send Us A Message</h3>
+                    <div>
+                        <label class="block text-xs font-semibold mb-1">Your Name</label>
+                        <input type="text" name="name" required placeholder="Enter full name" class="w-full px-4 py-2.5 rounded-xl text-sm border">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold mb-1">Your Email</label>
+                        <input type="email" name="email" required placeholder="name@example.com" class="w-full px-4 py-2.5 rounded-xl text-sm border">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold mb-1">Message</label>
+                        <textarea name="message" required rows="3" placeholder="Write your message here..." class="w-full px-4 py-2.5 rounded-xl text-sm border"></textarea>
+                    </div>
+                    <button type="submit" class="w-full py-3 rounded-xl font-bold text-sm btn-accent shadow-lg">Submit Message</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- ================= GALLERY VIEW ================= -->
+        <div id="galleryView" class="spa-view hidden space-y-8">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 glass-panel p-6 rounded-3xl">
+                <div>
+                    <h1 class="text-3xl font-extrabold text-gradient">Event Image Gallery</h1>
+                    <p class="text-xs md:text-sm text-slate-600 dark:text-slate-400 mt-1">Each event has its own photo collection. Click an event to view all captured moments.</p>
+                </div>
+                <div id="adminGalleryActionBtnContainer"></div>
+            </div>
+
+            <div class="space-y-4">
+                <div class="flex items-center justify-between">
+                    <h2 class="text-2xl font-bold text-gradient">Events & Photo Collections</h2>
+                    <span id="galleryEventCount" class="text-xs font-bold px-3 py-1 rounded-full glass-panel"></span>
+                </div>
+                <div id="galleryEventCardsContainer" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+            </div>
+
+            <!-- Admin Event / Photo Collection Management (ADMIN ONLY) -->
+            <div id="adminGalleryManagementSection" class="hidden space-y-4 pt-4">
+                <h2 class="text-2xl font-bold text-gradient">Gallery Photos Management</h2>
+                <p class="text-xs text-slate-500 dark:text-slate-400">Create an event card, then use <b>Manage Photos</b> on that card to add more images to the same event.</p>
+                <div id="adminGalleryGridContainer" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+            </div>
+        </div>
+
+        <!-- USER EVENT PHOTO COLLECTION MODAL -->
+        <dialog id="galleryEventViewModal" class="glass-panel backdrop:bg-black/80 rounded-3xl p-0 w-full max-w-5xl mx-auto overflow-hidden shadow-2xl border">
+            <div class="p-6 md:p-8 space-y-6 relative">
+                <button onclick="closeGalleryEventViewModal()" class="absolute top-5 right-5 text-slate-400 hover:text-red-500 p-2 z-10">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+                <div class="pr-10">
+                    <span id="galleryEventViewCategory" class="text-[10px] font-bold uppercase tracking-wider text-amber-600 dark:text-blue-400"></span>
+                    <h3 id="galleryEventViewTitle" class="text-2xl md:text-3xl font-black text-gradient"></h3>
+                    <p id="galleryEventViewCount" class="text-xs text-slate-500 mt-1"></p>
+                </div>
+                <div id="galleryEventImagesContainer" class="grid grid-cols-2 md:grid-cols-3 gap-4 max-h-[65vh] overflow-y-auto pr-1"></div>
+            </div>
+        </dialog>
+
+        <!-- FULLSCREEN SINGLE PHOTO VIEWER -->
+        <dialog id="galleryImageViewerModal" class="bg-black/95 backdrop:bg-black/90 p-0 w-screen h-screen max-w-none max-h-none">
+            <div class="relative w-full h-full flex items-center justify-center p-4">
+                <button onclick="closeGalleryImageViewer()" class="absolute top-5 right-5 z-20 p-3 rounded-full bg-white/10 text-white hover:bg-white/20">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+                <img id="galleryViewerImage" src="" alt="Gallery photo" class="max-w-full max-h-full object-contain rounded-xl">
+            </div>
+        </dialog>
+
+        <!-- ADMIN GALLERY EVENT MANAGEMENT MODAL -->
+        <dialog id="galleryCrudModal" class="glass-panel backdrop:bg-black/80 rounded-3xl p-0 w-full max-w-lg mx-auto overflow-hidden shadow-2xl border">
+            <div class="p-6 md:p-8 space-y-6 relative">
+                <button onclick="closeGalleryCrudModal()" class="absolute top-5 right-5 text-slate-400 hover:text-red-500 p-1">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+                <div class="text-center space-y-1">
+                    <h3 id="galleryCrudModalTitle" class="text-2xl font-bold text-gradient">Add Event Photo Collection</h3>
+                    <p id="galleryCrudModalDescription" class="text-xs text-slate-500 dark:text-slate-400">Create an event card and add one or more photos.</p>
+                </div>
+                <form id="galleryCrudForm" onsubmit="handleSaveGalleryEvent(event)" class="space-y-4">
+                    <input type="hidden" id="crudGalleryId">
+                    <div>
+                        <label class="block text-xs font-semibold mb-1">Event / Card Title</label>
+                        <input type="text" id="crudGalleryTitle" required placeholder="e.g. AWS Cloud Workshop 2026" class="w-full px-4 py-2.5 rounded-xl text-sm border">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold mb-1">Event Category / Tag</label>
+                        <input type="text" id="crudGalleryCategory" required placeholder="e.g. Workshop 2026" class="w-full px-4 py-2.5 rounded-xl text-sm border">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold mb-1">Select Photos</label>
+                        <input type="file" id="crudGalleryFile" accept="image/*" multiple class="w-full px-4 py-2 rounded-xl text-sm border file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-amber-500/10 file:text-amber-700 dark:file:text-blue-400 hover:file:bg-amber-500/20">
+                        <p id="galleryFileHelp" class="text-[10px] text-slate-500 mt-1">You can select multiple images at once. New images will be added to this event.</p>
+                    </div>
+                    <div id="galleryExistingImagesPreview" class="grid grid-cols-4 gap-2 max-h-32 overflow-y-auto"></div>
+                    <button type="submit" class="w-full py-3 rounded-xl font-bold text-sm btn-accent shadow-lg mt-2">
+                        Save Event Collection
+                    </button>
+                </form>
+            </div>
+        </dialog>
+
+        
+<!-- ================= ADMIN DETAILS TABLE VIEW ================= -->
+        <div id="adminDetailsView" class="spa-view hidden space-y-6">
+            <div class="glass-panel p-6 rounded-3xl flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div>
+                    <h1 class="text-2xl font-black text-gradient">Registered Members Directory</h1>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">Live view of all users registered through the Join Us form.</p>
+                </div>
+                <span class="px-4 py-1.5 rounded-full text-xs font-bold btn-accent">Admin Only Access</span>
+            </div>
+           
+            <div class="glass-panel rounded-3xl p-6 overflow-x-auto">
+                <table class="w-full text-left text-xs">
+                    <thead>
+                        <tr class="border-b border-amber-900/10 dark:border-slate-700/50 text-amber-700 dark:text-pink-500 uppercase tracking-wider">
+                            <th class="p-3">Username</th>
+                            <th class="p-3">Full Name</th>
+                            <th class="p-3">Gender</th>
+                            <th class="p-3">Category</th>
+                            <th class="p-3">Email</th>
+                            <th class="p-3">Phone</th>
+                            <th class="p-3">Institution</th>
+                        </tr>
+                    </thead>
+                    <tbody id="registeredUsersTableBody" class="divide-y divide-amber-900/10 dark:divide-slate-800/40">
+                        <!-- Populated dynamically via JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ================= PROFILE VIEW ================= -->
+        <div id="profileView" class="spa-view hidden space-y-8">
+            <div class="glass-panel p-6 md:p-10 rounded-3xl space-y-8">
+                <div class="flex flex-col sm:flex-row items-center gap-6 border-b border-amber-900/10 dark:border-slate-700/40 pb-6">
+                    <div class="relative group">
+                        <img id="profileAvatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200" alt="Profile Picture" class="w-28 h-28 rounded-full object-cover border-4 border-amber-500/30 dark:border-blue-500/30 shadow-lg">
+                        <button onclick="triggerAvatarUpload()" class="absolute bottom-0 right-0 p-2 rounded-full btn-accent shadow-md text-white">
+                            <i data-lucide="camera" class="w-4 h-4"></i>
+                        </button>
+                        <input type="file" id="avatarFileInput" accept="image/*" class="hidden" onchange="handleAvatarFileSelect(event)">
+                    </div>
+                    <div class="text-center sm:text-left space-y-1">
+                        <h2 id="profileDisplayName" class="text-2xl font-bold text-gradient">Member Name</h2>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Status: <span id="profileStatusBadge" class="text-emerald-600 dark:text-emerald-400 font-semibold">Active Member</span></p>
+                        <p id="profileDisplayId" class="font-mono text-xs font-bold text-amber-700 dark:text-pink-500">CloudVerse_01</p>
+                    </div>
+                </div>
+                <form onsubmit="saveProfileChanges(event)" class="space-y-6">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-xs font-semibold mb-1 text-slate-500 dark:text-slate-400">Username / ID</label>
+                            <input type="text" id="profIdInput" readonly class="w-full px-4 py-2.5 rounded-xl font-mono text-sm opacity-60 cursor-not-allowed">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold mb-1 text-slate-500 dark:text-slate-400">Registered Email</label>
+                            <input type="email" id="profEmailInput" readonly class="w-full px-4 py-2.5 rounded-xl text-sm opacity-60 cursor-not-allowed">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold mb-1">Full Name</label>
+                            <input type="text" id="profNameInput" required class="w-full px-4 py-2.5 rounded-xl text-sm border">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold mb-1">Phone Number</label>
+                            <input type="tel" id="profPhoneInput" required class="w-full px-4 py-2.5 rounded-xl text-sm border">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold mb-1">Institution</label>
+                            <input type="text" id="profInstitutionInput" required class="w-full px-4 py-2.5 rounded-xl text-sm border">
+                        </div>
+                    </div>
+                    <div class="flex gap-4 pt-2">
+                        <button type="submit" class="px-8 py-3 rounded-xl font-bold text-sm btn-accent shadow-lg">Save Profile Changes</button>
+                        <button type="button" onclick="performSignOut()" class="px-8 py-3 rounded-xl font-bold text-sm glass-panel hover:text-red-500">Sign Out</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- ADMIN EDIT CONTACT MODAL -->
+    <dialog id="contactCrudModal" class="glass-panel backdrop:bg-black/80 rounded-3xl p-0 w-full max-w-md mx-auto overflow-hidden shadow-2xl border">
+        <div class="p-6 space-y-6 relative">
+            <button onclick="closeContactCrudModal()" class="absolute top-5 right-5 text-slate-400 hover:text-red-500 p-1">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+            <div class="text-center space-y-1">
+                <h3 class="text-2xl font-bold text-gradient">Update Contact Info</h3>
+            </div>
+            <form onsubmit="handleSaveContact(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold mb-1">Phone Number</label>
+                    <input type="text" id="crudContactPhone" required class="w-full px-4 py-2 rounded-xl text-sm border">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold mb-1">Email</label>
+                    <input type="email" id="crudContactEmail" required class="w-full px-4 py-2 rounded-xl text-sm border">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold mb-1">LinkedIn URL</label>
+                    <input type="url" id="crudContactLinkedin" required class="w-full px-4 py-2 rounded-xl text-sm border">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold mb-1">WhatsApp URL</label>
+                    <input type="url" id="crudContactWhatsapp" required class="w-full px-4 py-2 rounded-xl text-sm border">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold mb-1">GitHub URL</label>
+                    <input type="url" id="crudContactGithub" required class="w-full px-4 py-2 rounded-xl text-sm border">
+                </div>
+                <button type="submit" class="w-full py-3 rounded-xl font-bold text-sm btn-accent shadow-lg">
+                    Save Contact Details
+                </button>
+            </form>
+        </div>
+    </dialog>
+
+    <!-- ADMIN CREATE/EDIT MEMBER MODAL -->
+    <dialog id="memberCrudModal" class="glass-panel backdrop:bg-black/80 rounded-3xl p-0 w-full max-w-md mx-auto overflow-hidden shadow-2xl border">
+        <div class="p-6 space-y-6 relative">
+            <button onclick="closeMemberCrudModal()" class="absolute top-5 right-5 text-slate-400 hover:text-red-500 p-1">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+            <div class="text-center space-y-1">
+                <h3 id="memberCrudModalTitle" class="text-2xl font-bold text-gradient">Add Community Member</h3>
+            </div>
+            <form onsubmit="handleSaveCommunityMember(event)" class="space-y-3">
+                <input type="hidden" id="crudMemberIndex">
+                <input type="hidden" id="crudMemberExistingImage">
+                <div class="flex items-center gap-4">
+                    <img id="crudMemberImagePreview" src="https://api.dicebear.com/7.x/avataaars/svg?seed=Preview" alt="Preview" class="w-16 h-16 rounded-full object-cover border-2 border-amber-500/30 shrink-0">
+                    <div class="flex-1">
+                        <label class="block text-xs font-semibold mb-1">Profile Photo (optional)</label>
+                        <input type="file" id="crudMemberFile" accept="image/*" onchange="handleMemberFilePreview(event)" class="w-full text-xs border rounded-xl file:mr-3 file:py-2 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-amber-500/10 file:text-amber-700 dark:file:text-blue-400 hover:file:bg-amber-500/20">
+                        <p class="text-[10px] text-slate-500 mt-1">Leave empty to keep the current photo or use an auto-generated avatar.</p>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold mb-1">Role / Position</label>
+                    <input type="text" id="crudMemberRole" required placeholder="e.g. Technical Coordinator" class="w-full px-4 py-2 rounded-xl text-sm border">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold mb-1">Name</label>
+                    <input type="text" id="crudMemberName" required placeholder="e.g. John Doe" class="w-full px-4 py-2 rounded-xl text-sm border">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold mb-1">Organization / Dept</label>
+                    <input type="text" id="crudMemberOrg" required placeholder="e.g. II-MCA, EGSPEC" class="w-full px-4 py-2 rounded-xl text-sm border">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold mb-1">Email</label>
+                    <input type="email" id="crudMemberEmail" required class="w-full px-4 py-2 rounded-xl text-sm border">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold mb-1">Phone</label>
+                    <input type="text" id="crudMemberPhone" required class="w-full px-4 py-2 rounded-xl text-sm border">
+                </div>
+                <button type="submit" class="w-full py-3 rounded-xl font-bold text-sm btn-accent shadow-lg mt-2">
+                    Save Member Details
+                </button>
+            </form>
+        </div>
+    </dialog>
+
+    <!-- ADMIN CREATE/EDIT EVENT MODAL -->
+    <dialog id="eventCrudModal" class="glass-panel backdrop:bg-black/80 rounded-3xl p-0 w-full max-w-xl mx-auto overflow-hidden shadow-2xl border">
+        <div class="p-6 md:p-8 space-y-6 relative">
+            <button onclick="closeEventCrudModal()" class="absolute top-5 right-5 text-slate-400 hover:text-red-500 p-1">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+            <div class="text-center space-y-1">
+                <h3 id="eventCrudModalTitle" class="text-2xl font-bold text-gradient">Add New Event</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400">Fill details to publish or update an event on CloudVerse.</p>
+            </div>
+            <form id="eventCrudForm" onsubmit="handleSaveEvent(event)" class="space-y-4">
+                <input type="hidden" id="crudEventId">
+                <div>
+                    <label class="block text-xs font-semibold mb-1">Event Title</label>
+                    <input type="text" id="crudTitle" required placeholder="e.g. AWS Cloud Deployment Workshop" class="w-full px-4 py-2 rounded-xl text-sm border">
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold mb-1">Category / Status</label>
+                        <select id="crudCategory" class="w-full px-4 py-2 rounded-xl text-sm border">
+                            <option value="upcoming">Upcoming Event</option>
+                            <option value="past">Past Event</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold mb-1">Event Mode</label>
+                        <select id="crudMode" class="w-full px-4 py-2 rounded-xl text-sm border">
+                            <option value="Hybrid Event">Hybrid Event</option>
+                            <option value="Online Workshop">Online Workshop</option>
+                            <option value="Offline Lab">Offline Lab</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold mb-1">Date String</label>
+                        <input type="text" id="crudDate" required placeholder="e.g. Oct 24, 2026" class="w-full px-4 py-2 rounded-xl text-sm border">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold mb-1">Time String</label>
+                        <input type="text" id="crudTime" required placeholder="e.g. 09:30 AM IST" class="w-full px-4 py-2 rounded-xl text-sm border">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold mb-1">Chief Guest / Resource Person</label>
+                    <input type="text" id="crudChiefGuest" required placeholder="e.g. Mr. B. Aravindh (Cloud & DevOps Engineer)" class="w-full px-4 py-2 rounded-xl text-sm border">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold mb-1">Topic / Brief Focus</label>
+                    <input type="text" id="crudTopic" required placeholder="e.g. Multi-region Cloud Architecture & Terraform" class="w-full px-4 py-2 rounded-xl text-sm border">
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold mb-1">Participant Count</label>
+                        <input type="text" id="crudParticipants" required placeholder="e.g. 250+ Attendees" class="w-full px-4 py-2 rounded-xl text-sm border">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold mb-1">Poster Image URL</label>
+                        <input type="url" id="crudPosterUrl" required placeholder="https://images.unsplash.com/..." class="w-full px-4 py-2 rounded-xl text-sm border">
+                    </div>
+                </div>
+                <button type="submit" class="w-full py-3 rounded-xl font-bold text-sm btn-accent shadow-lg mt-2">
+                    Save Event Details
+                </button>
+            </form>
+        </div>
+    </dialog>
+<!-- AUTHENTICATION DIALOG (UNIFIED SIGN IN, JOIN US & FORGOT PASSWORD) -->
+    <dialog id="authModal" class="glass-panel backdrop:bg-black/80 rounded-3xl p-0 w-full max-w-lg mx-auto overflow-hidden shadow-2xl border">
+        <div class="p-6 md:p-8 space-y-6 relative">
+            <button onclick="closeAuthModal()" class="absolute top-5 right-5 text-slate-400 hover:text-red-500 p-2">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+           
+            <div id="authNavTabs" class="flex justify-center gap-2 border-b border-amber-900/10 dark:border-slate-700/30 pb-3">
+                <button type="button" id="tabSignInBtn" onclick="switchAuthTab('signin')" class="px-5 py-2 rounded-xl text-xs font-bold btn-accent">Sign In</button>
+                <button type="button" id="tabJoinBtn" onclick="switchAuthTab('join')" class="px-5 py-2 rounded-xl text-xs font-bold glass-panel">Join Us</button>
+            </div>
+            <!-- SIGN IN FORM -->
+            <form id="signInForm" class="space-y-4" onsubmit="handleSignInSubmit(event)">
+                <div>
+                    <label class="block text-xs font-semibold mb-1">Username</label>
+                    <input type="text" id="signInUsername" required placeholder="Username" class="w-full px-4 py-2.5 rounded-xl text-sm border">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold mb-1">Password</label>
+                    <input type="password" id="signInPass" required placeholder="Password" class="w-full px-4 py-2.5 rounded-xl text-sm border">
+                </div>
+                <!-- Forgot Password Hyperlink -->
+                <div class="flex justify-end">
+                    <button type="button" onclick="switchAuthTab('forgot')" class="text-xs text-amber-600 dark:text-pink-500 hover:underline font-semibold">Forgot Password?</button>
+                </div>
+                <p id="signInError" class="text-xs text-red-500 font-semibold text-center hidden">Invalid Username or Password!</p>
+                <button type="submit" class="w-full py-3 rounded-xl font-bold text-sm btn-accent shadow-lg mt-2">
+                    Sign In
+                </button>
+            </form>
+
+            <!-- FORGOT PASSWORD FORM -->
+            <form id="forgotPasswordForm" class="space-y-4 hidden" onsubmit="handleForgotPasswordSubmit(event)">
+                <div class="text-center space-y-1">
+                    <h3 class="text-lg font-bold text-gradient">Reset Password</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">Enter your registered email and set a new password.</p>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold mb-1">Email</label>
+                    <input type="email" id="forgotEmail" required placeholder="name@example.com" class="w-full px-4 py-2.5 rounded-xl text-sm border">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold mb-1">New Password</label>
+                    <input type="password" id="forgotNewPass" required placeholder="New Password" class="w-full px-4 py-2.5 rounded-xl text-sm border">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold mb-1">Confirm Password</label>
+                    <input type="password" id="forgotConfirmPass" required placeholder="Confirm Password" class="w-full px-4 py-2.5 rounded-xl text-sm border">
+                </div>
+                <p id="forgotError" class="text-xs text-red-500 font-semibold text-center hidden"></p>
+                <p id="forgotSuccess" class="text-xs text-emerald-500 font-semibold text-center hidden"></p>
+                <div class="flex gap-3 pt-2">
+                    <button type="button" onclick="switchAuthTab('signin')" class="w-1/2 py-3 rounded-xl font-bold text-sm glass-panel">Back to Sign In</button>
+                    <button type="submit" class="w-1/2 py-3 rounded-xl font-bold text-sm btn-accent shadow-lg">Update Password</button>
+                </div>
+            </form>
+
+            <!-- REGISTRATION / JOIN US FORM -->
+            <form id="registrationForm" class="space-y-3 hidden" onsubmit="handleRegistration(event)">
+                <div>
+                    <label class="block text-xs font-semibold mb-1">Full Name</label>
+                    <input type="text" id="regName" required placeholder="Name" class="w-full px-4 py-2 rounded-xl text-sm border">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold mb-1">Gender</label>
+                        <select id="regGender" required class="w-full px-3 py-2 rounded-xl text-sm border">
+                            <option value="">Select</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Others">Others</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold mb-1">Category</label>
+                        <select id="regCategory" required class="w-full px-3 py-2 rounded-xl text-sm border">
+                            <option value="">Select</option>
+                            <option value="School student">School student</option>
+                            <option value="College student">College student</option>
+                            <option value="Staff">Staff</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold mb-1">Email Address</label>
+                    <input type="email" id="regEmail" required placeholder="student@example.com" class="w-full px-4 py-2 rounded-xl text-sm border">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold mb-1">Phone Number</label>
+                    <input type="tel" id="regPhone" required placeholder="+91 9876543210" class="w-full px-4 py-2 rounded-xl text-sm border">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold mb-1">Institution Name</label>
+                    <input type="text" id="regInstitution" required placeholder="Enter your college or School name" class="w-full px-4 py-2 rounded-xl text-sm border">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold mb-1">Set Password</label>
+                    <input type="password" id="regPass" required placeholder="Password" class="w-full px-4 py-2 rounded-xl text-sm border">
+                </div>
+                <button type="submit" class="w-full py-3 rounded-xl font-bold text-sm btn-accent shadow-lg mt-2">
+                    Submit Registration
+                </button>
+            </form>
+        </div>
+    </dialog>
+
+    <!-- PERSISTENT FOOTER -->
+    <footer id="contactFooter" class="mt-24 border-t glass-panel py-10 px-6 z-10">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+            <div class="space-y-2 text-center md:text-left">
+                <h4 class="text-xl font-extrabold text-gradient">CloudVerse Nagai</h4>
+                <p class="text-xs text-slate-600 dark:text-slate-400 max-w-sm">
+                    Connecting young tech minds across colleges for cloud excellence.
+                </p>
+            </div>
+            <div class="flex flex-col items-center justify-center space-y-3">
+                <p class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-widest">Connect With Us</p>
+                <div class="flex items-center gap-5">
+                    <a id="footerLinkedin" href="https://linkedin.com" target="_blank" class="w-9 h-9 rounded-full glass-panel flex items-center justify-center text-slate-600 dark:text-slate-400 hover:text-amber-600 dark:hover:text-blue-500 hover:scale-110 transition-all">
+                        <i class="fa-brands fa-linkedin-in text-sm"></i>
+                    </a>
+                    <a id="footerWhatsapp" href="https://chat.whatsapp.com" target="_blank" class="w-9 h-9 rounded-full glass-panel flex items-center justify-center text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-500 hover:scale-110 transition-all">
+                        <i class="fa-brands fa-whatsapp text-sm"></i>
+                    </a>
+                    <a id="footerGithub" href="https://github.com" target="_blank" class="w-9 h-9 rounded-full glass-panel flex items-center justify-center text-slate-600 dark:text-slate-400 hover:text-purple-600 dark:hover:text-purple-500 hover:scale-110 transition-all">
+                        <i class="fa-brands fa-github text-sm"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="space-y-2 text-center md:text-right">
+                <div class="flex items-center justify-center md:justify-end gap-2">
+                    <i data-lucide="cloud" class="w-5 h-5 text-amber-600 dark:text-pink-500"></i>
+                    <span class="font-extrabold text-base">E.G.S. Pillay MCA</span>
+                </div>
+                <div class="text-xs text-slate-600 dark:text-slate-400 space-y-1">
+                    <p><i data-lucide="phone" class="w-3.5 h-3.5 inline mr-1 text-amber-600 dark:text-blue-500"></i> <span id="footerPhone">+91 9944395848</span></p>
+                    <p><i data-lucide="mail" class="w-3.5 h-3.5 inline mr-1 text-amber-600 dark:text-blue-500"></i> <span id="footerEmail">cloudverse@gmail.com</span></p>
+                    <p><i data-lucide="map-pin" class="w-3.5 h-3.5 inline mr-1 text-amber-600 dark:text-blue-500"></i> Nagapattinam, Tamil Nadu</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- LOGO VIEWER FOR ALL USERS -->
+    <dialog id="siteLogoViewerModal" class="backdrop:bg-black/85 bg-transparent p-0 w-full max-w-5xl">
+        <div class="relative min-h-[70vh] flex items-center justify-center p-6">
+            <button type="button" onclick="closeSiteLogoViewer()" class="absolute top-4 right-4 z-10 w-11 h-11 rounded-full bg-white/90 text-slate-800 shadow-xl flex items-center justify-center hover:scale-105 transition" aria-label="Close logo viewer">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            <div class="max-w-[90vw] max-h-[80vh] rounded-3xl bg-white/10 backdrop-blur-md border border-white/20 p-4 shadow-2xl">
+                <img id="siteLogoViewerImage" src="" alt="CloudVerse Logo" class="max-w-[82vw] max-h-[72vh] object-contain rounded-2xl">
+            </div>
+        </div>
+    </dialog>
+
+    <!-- ADMIN SITE LOGO EDITOR -->
+    <dialog id="siteLogoModal" class="glass-panel backdrop:bg-black/80 rounded-3xl p-0 w-full max-w-md mx-auto overflow-hidden shadow-2xl border">
+        <div class="p-6 space-y-5 relative">
+            <button type="button" onclick="closeSiteLogoModal()" class="absolute top-4 right-4 text-slate-400 hover:text-red-500">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+            <div class="text-center">
+                <h3 class="text-2xl font-bold text-gradient">Edit Website Logo</h3>
+                <p class="text-xs text-slate-500 mt-1">Admin can replace the pink logo shown at the top of the website.</p>
+            </div>
+            <div class="flex justify-center">
+                <div class="w-28 h-28 rounded-3xl bg-pink-500/10 border-2 border-pink-500/30 p-3">
+                    <img id="siteLogoModalPreview" src="" alt="Logo preview" class="w-full h-full object-contain">
+                </div>
+            </div>
+            <form onsubmit="handleSaveSiteLogo(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold mb-1">Choose Logo Image</label>
+                    <input type="file" id="siteLogoFile" accept="image/*" required onchange="previewSiteLogo(event)" class="w-full text-xs border rounded-xl file:mr-3 file:py-2 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-pink-500/10 file:text-pink-600">
+                    <p class="text-[10px] text-slate-500 mt-1">PNG, JPG, WEBP and other image formats are supported.</p>
+                </div>
+                <div class="flex gap-3">
+                    <button type="button" onclick="resetSiteLogo()" class="w-1/2 py-3 rounded-xl font-bold text-sm glass-panel">Reset Logo</button>
+                    <button type="submit" class="w-1/2 py-3 rounded-xl font-bold text-sm btn-accent shadow-lg">Save Logo</button>
+                </div>
+            </form>
+        </div>
+    </dialog>
+
+    <!-- APPLICATION SCRIPT & CONTROLLERS -->
+    <script>
+        // Storage Keys
+        const STORAGE_KEY_USER = 'cloudverse_user_account';
+        const STORAGE_KEY_REGISTERED_USERS = 'cloudverse_registered_users_list_v1';
+        const STORAGE_KEY_EVENTS = 'cloudverse_events_list_v2';
+        const STORAGE_KEY_COMMUNITY = 'cloudverse_community_members_v1';
+        const STORAGE_KEY_CONTACT = 'cloudverse_contact_info_v1';
+        const STORAGE_KEY_SLIDER_METADATA = 'cloudverse_slider_metadata_v1';
+        const STORAGE_KEY_GALLERY = 'cloudverse_gallery_images_v1';
+        const STORAGE_KEY_SITE_LOGO = 'cloudverse_site_logo_v1';
+        const DEFAULT_SITE_LOGO = 'https://api.dicebear.com/7.x/shapes/svg?seed=CloudVerse&backgroundColor=ec4899';
+        // ================= CLOUD BACKEND DATA LAYER =================
+        let cloudState = {
+            events: [],
+            community: [],
+            contact: null,
+            gallery: [],
+            slider_metadata: null,
+            site_logo: DEFAULT_SITE_LOGO
+        };
+        let cloudStateReady = false;
+
+        async function loadCloudState() {
+            try {
+                const response = await fetch('/api/state', { cache: 'no-store' });
+                const data = await response.json();
+                if (!response.ok || !data.success) throw new Error(data.message || 'Could not load shared data.');
+                cloudState = { ...cloudState, ...(data.data || {}) };
+                cloudStateReady = true;
+                return true;
+            } catch (error) {
+                console.warn('Cloud data load failed:', error);
+                // Keep the built-in defaults available if the database is temporarily unavailable.
+                cloudState = {
+                    events: DEFAULT_EVENTS,
+                    community: DEFAULT_COMMUNITY_MEMBERS,
+                    contact: DEFAULT_CONTACT,
+                    gallery: normalizeGalleryCollections(DEFAULT_GALLERY_IMAGES),
+                    slider_metadata: DEFAULT_SLIDER_METADATA,
+                    site_logo: DEFAULT_SITE_LOGO
+                };
+                cloudStateReady = false;
+                return false;
+            }
+        }
+
+        async function persistCloudState(key, value) {
+            cloudState[key] = value;
+            try {
+                const response = await fetch(`/api/state/${encodeURIComponent(key)}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ value })
+                });
+                const data = await response.json().catch(() => ({}));
+                if (!response.ok || !data.success) throw new Error(data.message || 'Could not save shared data.');
+                return true;
+            } catch (error) {
+                console.error(`Could not save ${key}:`, error);
+                alert(error.message || 'Could not save the latest change. Please try again.');
+                return false;
+            }
+        }
+
+        async function dataUrlToBlob(dataUrl) {
+            const [header, base64] = String(dataUrl).split(',');
+            const mime = (header.match(/data:([^;]+)/) || [,'application/octet-stream'])[1];
+            const bytes = Uint8Array.from(atob(base64), c => c.charCodeAt(0));
+            return new Blob([bytes], { type: mime });
+        }
+
+        async function uploadImageToBackend(fileOrBlob, filename = 'image.webp') {
+            const file = fileOrBlob;
+            const dataUrl = await new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = () => reject(new Error('Could not read the selected image.'));
+                reader.readAsDataURL(file);
+            });
+            const response = await fetch('/api/upload', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    filename,
+                    contentType: file.type || 'image/webp',
+                    base64: dataUrl
+                })
+            });
+            const data = await response.json().catch(() => ({}));
+            if (!response.ok || !data.success) throw new Error(data.message || 'Image upload failed.');
+            return data.url;
+        }
+
+        async function refreshCurrentUser() {
+            try {
+                const response = await fetch('/api/auth/me', { cache: 'no-store' });
+                const data = await response.json();
+                if (data.success && data.user) {
+                    localStorage.setItem(STORAGE_KEY_USER, JSON.stringify(data.user));
+                    return data.user;
+                }
+                localStorage.removeItem(STORAGE_KEY_USER);
+            } catch (error) {
+                console.warn('Session refresh failed:', error);
+            }
+            return getActiveUser();
+        }
+        // ================= END CLOUD BACKEND DATA LAYER =================
+
+       
+        // Pre-populated Default Event Database
+        const DEFAULT_EVENTS = [
+            {
+                id: 'evt_01',
+                title: 'State-Level AWS Cloud Deployment Hackathon',
+                category: 'upcoming',
+                mode: 'Hybrid Event',
+                date: 'Oct 24, 2026',
+                time: '09:30 AM IST',
+                chiefGuest: 'Mr. B. Aravindh (Cloud & DevOps Engineer, Orionshift)',
+                topic: 'Build resilient multi-region architectures and automated CI/CD pipelines.',
+                participants: '350+ Registrations',
+                posterUrl: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=800'
+            },
+            {
+                id: 'evt_02',
+                title: 'Docker & Kubernetes Bootcamp for Beginners',
+                category: 'upcoming',
+                mode: 'Online Workshop',
+                date: 'Nov 12, 2026',
+                time: '02:00 PM IST',
+                chiefGuest: 'Mr. Gunasekaran Selvarasu (Team Lead, Doodleblue Innovations)',
+                topic: 'Container orchestration, microservices deployment, and Pod scaling.',
+                participants: '200+ Enrolled',
+                posterUrl: 'https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?auto=format&fit=crop&q=80&w=800'
+            },
+            {
+                id: 'evt_03',
+                title: 'Cloud Security & Serverless Architecture 101',
+                category: 'past',
+                mode: 'Offline Lab',
+                date: 'Aug 05, 2026',
+                time: '10:00 AM IST',
+                chiefGuest: 'Dr. J. Noorul Ameen (Head-AIML, EGSPEC)',
+                topic: 'AWS Lambda, IAM Policies, and zero-trust cloud infrastructure.',
+                participants: '280 Attendees',
+                posterUrl: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&q=80&w=800'
+            }
+        ];
+
+        // Community Team Data Source
+        const DEFAULT_COMMUNITY_MEMBERS = [
+            { role: "President", name: "Swetha .V", organization: "II-MCA, EGSPEC", email: "swethashiyam14@gmail.com", phone: "N/A", linkedin: "#", image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Swetha" },
+            { role: "Vice President", name: "Abinaya .R", organization: "II-MCA, EGSPEC", email: "abinayarajmohan45@gmail.com", phone: "N/A", linkedin: "#", image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Abinaya" },
+            { role: "Joint Secretary", name: "Tholkappiyan .M", organization: "II-MCA, EGSPEC", email: "Thols101@gmail.com", phone: "N/A", linkedin: "#", image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Tholkappiyan" },
+            { role: "Treasurer", name: "Ashiqhur Rahman I", organization: "II-MCA, EGSPEC", email: "ashikofficial0803@gmail.com", phone: "9944395848", linkedin: "#", image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Ashiqhur%20Rahman" },
+            { role: "Public Relations", name: "Srivaishnavi-M.R.", organization: "II-MCA, EGSPEC", email: "srijaga03@gmail.com", phone: "N/A", linkedin: "#", image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Srivaishnavi" },
+            { role: "Technical Events Head", name: "Sindhu B", organization: "II-MCA, EGSPEC", email: "Sindhuz2005@gmail.com", phone: "N/A", linkedin: "#", image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Sindhu" },
+            { role: "Web Developer", name: "S.Abinaya", organization: "II-MCA, EGSPEC", email: "abinayaselvam094@gmail.com", phone: "N/A", linkedin: "#", image: "https://api.dicebear.com/7.x/avataaars/svg?seed=AbinayaWeb" },
+            { role: "Graphic Designer", name: "Santhiya K", organization: "II-MCA, EGSPEC", email: "santhiyak10112005@gmail.com", phone: "N/A", linkedin: "#", image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Santhiya" },
+            { role: "Content Writer", name: "Priyadharshini R", organization: "II-MCA, EGSPEC", email: "Dharshinipriyaa1303@gmail.com", phone: "N/A", linkedin: "#", image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Priyadharshini" },
+            { role: "Community Manager", name: "Menaga K", organization: "II-MCA, EGSPEC", email: "Menagamenaga11526@gmail.com", phone: "N/A", linkedin: "#", image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Menaga" },
+            { role: "Newsletter & Portfolio Editor", name: "Mohamed Nafil", organization: "II-MCA, EGSPEC", email: "mohamednafil808@gmail.com", phone: "N/A", linkedin: "#", image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Mohamed%20Nafil" },
+            { role: "Design Team Lead", name: "Rajasri V", organization: "II-MCA, EGSPEC", email: "Rajasriammu0327@gmail.com", phone: "N/A", linkedin: "#", image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Rajasri" },
+            { role: "Reporting & Documentation", name: "Monisha K", organization: "II-MCA, EGSPEC", email: "Monishakannan1705@gmail.com", phone: "N/A", linkedin: "#", image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Monisha" },
+            { role: "Mentorship Coordinator", name: "Arthika A", organization: "II-MCA, EGSPEC", email: "arthikaanbu1201@gmail.com", phone: "9585809258", linkedin: "#", image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Arthika" },
+            { role: "Social Media Lead", name: "Nibetha J", organization: "II-MCA, EGSPEC", email: "Nibetha2005@gmail.com", phone: "N/A", linkedin: "#", image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Nibetha" },
+            { role: "Faculty Convener", name: "Dr. J. Vanitha", organization: "Professor & Head MCA, EGSPEC", email: "vanitha@egspec.ac.in", phone: "N/A", linkedin: "#", image: "https://api.dicebear.com/7.x/avataaars/svg?seed=DrVanitha" },
+            { role: "Faculty Mentor", name: "Mrs. A. Hema", organization: "Assistant Professor MCA, EGSPEC", email: "hema@egspec.ac.in", phone: "N/A", linkedin: "#", image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Hema" },
+            { role: "Academic Expert", name: "Dr. J. Noorul Ameen", organization: "Head(I) - AIML, EGSPEC", email: "noorulameen@egspec.ac.in", phone: "N/A", linkedin: "#", image: "https://api.dicebear.com/7.x/avataaars/svg?seed=NoorulAmeen" },
+            { role: "Industry Expert", name: "Mr. B. Aravindh", organization: "Cloud & DevOps, Orionshift Pvt Ltd", email: "aravindh@orionshift.com", phone: "N/A", linkedin: "#", image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Aravindh" },
+            { role: "Alumni Advisor", name: "Mr. Gunasekaran Selvarasu", organization: "Team Lead, Doodleblue Innovations", email: "sguna0100@gmail.com", phone: "89732 21644", linkedin: "#", image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Gunasekaran" }
+        ];
+
+        // Default Gallery Images Data
+        const DEFAULT_GALLERY_IMAGES = [
+            { id: 'gal_1', title: 'AWS Cloud Architecture Workshop', url: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&q=80&w=1000', category: 'Workshop' },
+            { id: 'gal_2', title: 'Inter-College Hackathon Coding Session', url: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=1000', category: 'Hackathon' },
+            { id: 'gal_3', title: 'Cloud Security & DevOps Seminar', url: 'https://images.unsplash.com/photo-1515187029135-18ee286d815b?auto=format&fit=crop&q=80&w=1000', category: 'Seminar' },
+            { id: 'gal_4', title: 'Hands-on Kubernetes Lab Session', url: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=1000', category: 'Lab' }
+        ];
+
+        const DEFAULT_CONTACT = {
+            phone: "+91 9944395848",
+            email: "cloudverse@gmail.com",
+            linkedin: "https://linkedin.com",
+            whatsapp: "https://chat.whatsapp.com",
+            github: "https://github.com"
+        };
+        const DEFAULT_SLIDER_METADATA = {
+            tagText: "Leadership & Advisors Showcase",
+            titleText: "Meet Our Core Team & Mentors"
+        };
+
+        let activeEventsTab = 'upcoming';
+        let currentSlideIndex = 0;
+        let sliderInterval = null;
+
+        let gallerySlideIndex = 0;
+        let galleryInterval = null;
+
+        // Initialization
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Initialize the chatbot first so it remains available even if optional
+            // database configuration is missing or temporarily unavailable.
+            initEGSPillayChatbot();
+            try { await initializeDatabase(); } catch (error) { console.error('Database initialization:', error); }
+            await refreshCurrentUser();
+            renderNavAuth();
+            renderSiteLogo();
+            renderHomeUpcomingHighlight();
+            renderCommunityMembers();
+            renderContactDetails();
+            renderAdminDetailsTable();
+            updateCounterDisplay();
+            initLeadershipSlider();
+            renderSliderMetadata();
+            renderGalleryPage();
+            lucide.createIcons();
+        });
+
+        async function initializeDatabase() {
+            const loaded = await loadCloudState();
+            if (!loaded) {
+                cloudState = {
+                    events: DEFAULT_EVENTS,
+                    community: DEFAULT_COMMUNITY_MEMBERS,
+                    contact: DEFAULT_CONTACT,
+                    gallery: normalizeGalleryCollections(DEFAULT_GALLERY_IMAGES),
+                    slider_metadata: DEFAULT_SLIDER_METADATA,
+                    site_logo: DEFAULT_SITE_LOGO
+                };
+            }
+        }
+
+        function getStoredEvents() { return Array.isArray(cloudState.events) ? cloudState.events : DEFAULT_EVENTS; }
+        function getStoredCommunity() { return Array.isArray(cloudState.community) ? cloudState.community : DEFAULT_COMMUNITY_MEMBERS; }
+        function getStoredContact() { return cloudState.contact || DEFAULT_CONTACT; }
+        function getRegisteredUsers() { return JSON.parse(localStorage.getItem(STORAGE_KEY_REGISTERED_USERS)) || []; }
+        function getActiveUser() { return JSON.parse(localStorage.getItem(STORAGE_KEY_USER)); }
+        function getSliderMetadata() { return cloudState.slider_metadata || DEFAULT_SLIDER_METADATA; }
+        // Logo is stored in IndexedDB instead of localStorage.
+        // This avoids the small localStorage quota that can be exhausted by gallery photos.
+        const LOGO_DB_NAME = 'CloudVerseLogoDB';
+        const LOGO_STORE_NAME = 'siteLogo';
+        let currentLogoObjectUrl = null;
+
+        function openLogoDB() {
+            return new Promise((resolve, reject) => {
+                if (!window.indexedDB) { reject(new Error('IndexedDB is not supported in this browser.')); return; }
+                const request = indexedDB.open(LOGO_DB_NAME, 1);
+                request.onupgradeneeded = () => {
+                    const db = request.result;
+                    if (!db.objectStoreNames.contains(LOGO_STORE_NAME)) db.createObjectStore(LOGO_STORE_NAME);
+                };
+                request.onsuccess = () => resolve(request.result);
+                request.onerror = () => reject(request.error || new Error('Could not open logo storage.'));
+            });
+        }
+
+        async function getStoredSiteLogo() {
+            return cloudState.site_logo || DEFAULT_SITE_LOGO;
+        }
+
+        async function saveSiteLogoBlob(blob) {
+            const url = await uploadImageToBackend(blob, 'site-logo.webp');
+            await persistCloudState('site_logo', url);
+            return url;
+        }
+
+        async function deleteSiteLogoBlob() {
+            await persistCloudState('site_logo', DEFAULT_SITE_LOGO);
+        }
+
+        async function renderSiteLogo() {
+            const logo = await getStoredSiteLogo();
+            const img = document.getElementById('siteLogoImage');
+            if (img) img.src = logo;
+            const editBtn = document.getElementById('siteLogoEditBtn');
+            if (editBtn) editBtn.classList.toggle('hidden', !isAdminLoggedIn());
+        }
+
+        function getStoredGallery() {
+            const raw = cloudState.gallery || DEFAULT_GALLERY_IMAGES;
+            return normalizeGalleryCollections(raw);
+        }
+
+        function normalizeGalleryCollections(raw) {
+            if (!Array.isArray(raw)) return [];
+            if (raw.length === 0) return [];
+            // New format: each item is an event collection with an images array.
+            if (raw.every(item => Array.isArray(item.images))) return raw;
+
+            // Backward compatibility: convert the old one-image-per-card format.
+            const grouped = [];
+            raw.forEach((item, index) => {
+                const title = item.title || 'Untitled Event';
+                const category = item.category || 'Event';
+                let group = grouped.find(g => g.title === title && g.category === category);
+                if (!group) {
+                    group = {
+                        id: item.id || `gal_${Date.now()}_${index}`,
+                        title,
+                        category,
+                        images: []
+                    };
+                    grouped.push(group);
+                }
+                if (item.url) {
+                    group.images.push({
+                        id: `${group.id}_img_${group.images.length + 1}`,
+                        url: item.url
+                    });
+                }
+            });
+            return grouped;
+        }
+
+        function saveStoredGallery(gallery) {
+            cloudState.gallery = gallery;
+            return persistCloudState('gallery', gallery);
+        }
+
+        function isAdminLoggedIn() {
+            const user = getActiveUser();
+            return user && user.isAdmin === true;
+        }
+
+        // SPA Navigation Router
+        function navigateTo(viewId) {
+            const views = document.querySelectorAll('.spa-view');
+            views.forEach(v => v.classList.add('hidden'));
+           
+            if (viewId === 'home') {
+                document.getElementById('homeView').classList.remove('hidden');
+            } else if (viewId === 'benefits') {
+                document.getElementById('benefitsView').classList.remove('hidden');
+            } else if (viewId === 'community') {
+                document.getElementById('communityView').classList.remove('hidden');
+                renderCommunityMembers();
+            } else if (viewId === 'events') {
+                document.getElementById('eventsView').classList.remove('hidden');
+                renderEventsPage();
+            } else if (viewId === 'about') {
+                document.getElementById('aboutView').classList.remove('hidden');
+            } else if (viewId === 'contact') {
+                document.getElementById('contactView').classList.remove('hidden');
+                renderContactDetails();
+            } else if (viewId === 'gallery') {
+                document.getElementById('galleryView').classList.remove('hidden');
+                renderGalleryPage();
+            } else if (viewId === 'adminDetails') {
+                if (!isAdminLoggedIn()) {
+                    alert("Access restricted to Admin only!");
+                    navigateTo('home');
+                    return;
+                }
+                renderAdminDetailsTable();
+                document.getElementById('adminDetailsView').classList.remove('hidden');
+            } else if (viewId === 'profile') {
+                if (!getActiveUser()) {
+                    openSignInModal();
+                    return;
+                }
+                populateProfileView();
+                document.getElementById('profileView').classList.remove('hidden');
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Theme Toggle Logic
+        const themeToggleBtn = document.getElementById('themeToggle');
+        themeToggleBtn.addEventListener('click', () => {
+            const htmlElement = document.documentElement;
+            const currentTheme = htmlElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            htmlElement.setAttribute('data-theme', newTheme);
+            document.getElementById('sunIcon').classList.toggle('hidden', newTheme === 'light');
+            document.getElementById('moonIcon').classList.toggle('hidden', newTheme === 'dark');
+        });
+
+        // Dynamic Auth Navigation Bar
+        function renderNavAuth() {
+            const container = document.getElementById('navAuthContainer');
+            const adminDetailsBtn = document.getElementById('adminDetailsNavLink');
+            const user = getActiveUser();
+            if (user) {
+                if (user.isAdmin) {
+                    adminDetailsBtn.classList.remove('hidden');
+                } else {
+                    adminDetailsBtn.classList.add('hidden');
+                }
+                container.innerHTML = `
+                    <div class="flex items-center gap-2">
+                        <button onclick="navigateTo('profile')" class="px-4 py-2 rounded-xl text-xs font-bold glass-panel hover:border-amber-500 dark:hover:border-pink-500 flex items-center gap-1.5">
+                            <i data-lucide="user" class="w-4 h-4 text-amber-600 dark:text-pink-500"></i> ${user.username}
+                        </button>
+                    </div>
+                `;
+            } else {
+                adminDetailsBtn.classList.add('hidden');
+                container.innerHTML = `
+                    <button onclick="openSignInModal()" class="px-5 py-2.5 rounded-xl text-xs font-bold btn-accent shadow-md">
+                        Sign In / Join
+                    </button>
+                `;
+            }
+            lucide.createIcons();
+            renderSiteLogo();
+        }
+
+        // Auth Modal Controls & Tab Switching
+        function openSignInModal() {
+            const modal = document.getElementById('authModal');
+            switchAuthTab('signin');
+            modal.showModal();
+        }
+        function closeAuthModal() {
+            document.getElementById('authModal').close();
+        }
+        function switchAuthTab(tab) {
+            const signInForm = document.getElementById('signInForm');
+            const regForm = document.getElementById('registrationForm');
+            const forgotForm = document.getElementById('forgotPasswordForm');
+            const authNavTabs = document.getElementById('authNavTabs');
+            const tabSignInBtn = document.getElementById('tabSignInBtn');
+            const tabJoinBtn = document.getElementById('tabJoinBtn');
+
+            document.getElementById('signInError').classList.add('hidden');
+            document.getElementById('forgotError').classList.add('hidden');
+            document.getElementById('forgotSuccess').classList.add('hidden');
+
+            if (tab === 'signin') {
+                signInForm.classList.remove('hidden');
+                regForm.classList.add('hidden');
+                forgotForm.classList.add('hidden');
+                authNavTabs.classList.remove('hidden');
+                tabSignInBtn.className = 'px-5 py-2 rounded-xl text-xs font-bold btn-accent';
+                tabJoinBtn.className = 'px-5 py-2 rounded-xl text-xs font-bold glass-panel';
+            } else if (tab === 'join') {
+                signInForm.classList.add('hidden');
+                regForm.classList.remove('hidden');
+                forgotForm.classList.add('hidden');
+                authNavTabs.classList.remove('hidden');
+                tabSignInBtn.className = 'px-5 py-2 rounded-xl text-xs font-bold glass-panel';
+                tabJoinBtn.className = 'px-5 py-2 rounded-xl text-xs font-bold btn-accent';
+            } else if (tab === 'forgot') {
+                signInForm.classList.add('hidden');
+                regForm.classList.add('hidden');
+                forgotForm.classList.remove('hidden');
+                authNavTabs.classList.add('hidden');
+            }
+        }
+
+        // Handle Registration
+        function handleRegistration(e) {
+            e.preventDefault();
+            const users = getRegisteredUsers();
+            let nextIndex = users.length + 2;
+            let formattedIndex = nextIndex < 10 ? '0' + nextIndex : nextIndex;
+            let autoUsername = `CloudVerse_${formattedIndex}`;
+            const newUser = {
+                username: autoUsername,
+                password: document.getElementById('regPass').value,
+                name: document.getElementById('regName').value,
+                gender: document.getElementById('regGender').value,
+                category: document.getElementById('regCategory').value,
+                email: document.getElementById('regEmail').value,
+                phone: document.getElementById('regPhone').value,
+                institution: document.getElementById('regInstitution').value,
+                isAdmin: false
+            };
+            users.push(newUser);
+            // Registration is now persisted by the backend.
+            (async () => {
+                try {
+                    const response = await fetch('/api/auth/register', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            name: newUser.name, gender: newUser.gender, category: newUser.category,
+                            email: newUser.email, phone: newUser.phone, institution: newUser.institution,
+                            password: newUser.password
+                        })
+                    });
+                    const data = await response.json().catch(() => ({}));
+                    if (!response.ok || !data.success) throw new Error(data.message || 'Registration failed.');
+                    localStorage.setItem(STORAGE_KEY_USER, JSON.stringify(data.user));
+                    alert(`Registration successful! Your generated Username is: ${data.user.username}`);
+                    closeAuthModal(); renderNavAuth(); updateCounterDisplay(); navigateTo('profile');
+                } catch (error) { alert(error.message || 'Could not create the account. Please try again.'); }
+            })();
+        }
+
+        // Handle Unified Sign In
+        async function handleSignInSubmit(e) {
+            e.preventDefault();
+            const userIn = document.getElementById('signInUsername').value.trim();
+            const passIn = document.getElementById('signInPass').value;
+            const errElem = document.getElementById('signInError');
+            errElem.classList.add('hidden');
+            try {
+                const response = await fetch('/api/auth/login', {
+                    method:'POST',
+                    headers:{'Content-Type':'application/json'},
+                    body:JSON.stringify({username:userIn,password:passIn})
+                });
+                const data = await response.json().catch(()=>({}));
+                if (!response.ok || !data.success) throw new Error(data.message || 'Invalid username or password.');
+                localStorage.setItem(STORAGE_KEY_USER, JSON.stringify(data.user));
+                closeAuthModal(); renderNavAuth();
+                navigateTo(data.user.isAdmin ? 'adminDetails' : 'profile');
+            } catch (error) {
+                errElem.innerText = error.message || 'Sign in failed.';
+                errElem.classList.remove('hidden');
+            }
+        }
+
+        async function handleForgotPasswordSubmit(e) {
+            e.preventDefault();
+            const emailInput = document.getElementById('forgotEmail').value.trim();
+            const newPassInput = document.getElementById('forgotNewPass').value;
+            const confirmPassInput = document.getElementById('forgotConfirmPass').value;
+            const errElem = document.getElementById('forgotError');
+            const succElem = document.getElementById('forgotSuccess');
+            errElem.classList.add('hidden'); succElem.classList.add('hidden');
+            if (newPassInput !== confirmPassInput) {
+                errElem.innerText = "New Password and Confirm Password do not match!";
+                errElem.classList.remove('hidden'); return;
+            }
+            try {
+                const response = await fetch('/api/auth/forgot', {
+                    method:'POST', headers:{'Content-Type':'application/json'},
+                    body:JSON.stringify({email:emailInput,password:newPassInput})
+                });
+                const data=await response.json().catch(()=>({}));
+                if (!response.ok || !data.success) throw new Error(data.message || 'Could not update the password.');
+                succElem.innerText = "Password successfully updated! You can now sign in.";
+                succElem.classList.remove('hidden');
+                document.getElementById('forgotEmail').value='';
+                document.getElementById('forgotNewPass').value='';
+                document.getElementById('forgotConfirmPass').value='';
+            } catch(error) { errElem.innerText=error.message; errElem.classList.remove('hidden'); }
+        }
+
+        async function performSignOut() {
+            try { await fetch('/api/auth/logout', {method:'POST'}); } catch (_) {}
+            localStorage.removeItem(STORAGE_KEY_USER);
+            renderNavAuth(); navigateTo('home');
+        }
+
+        function populateProfileView() {
+            const u = getActiveUser();
+            if (!u) return;
+            document.getElementById('profileDisplayName').innerText = u.name;
+            document.getElementById('profileDisplayId').innerText = u.username;
+            document.getElementById('profIdInput').value = u.username;
+            document.getElementById('profEmailInput').value = u.email;
+            document.getElementById('profNameInput').value = u.name;
+            document.getElementById('profPhoneInput').value = u.phone;
+            document.getElementById('profInstitutionInput').value = u.institution;
+           
+            const badge = document.getElementById('profileStatusBadge');
+            if (u.isAdmin) {
+                badge.innerText = 'Admin Administrator';
+                badge.className = 'text-amber-600 dark:text-pink-500 font-bold';
+            } else {
+                badge.innerText = 'Active Member';
+                badge.className = 'text-emerald-600 dark:text-emerald-400 font-semibold';
+            }
+        }
+
+        async function saveProfileChanges(e) {
+            e.preventDefault();
+            const u = getActiveUser();
+            if (!u) return;
+            if (u.isAdmin) { alert("Admin profile is managed by the deployment environment."); return; }
+            const patch = {
+                name: document.getElementById('profNameInput').value.trim(),
+                phone: document.getElementById('profPhoneInput').value.trim(),
+                institution: document.getElementById('profInstitutionInput').value.trim()
+            };
+            try {
+                const response=await fetch('/api/auth/profile',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(patch)});
+                const data=await response.json().catch(()=>({}));
+                if (!response.ok || !data.success) throw new Error(data.message || 'Could not update profile.');
+                localStorage.setItem(STORAGE_KEY_USER,JSON.stringify(data.user));
+                alert("Profile details updated successfully!");
+                renderNavAuth(); populateProfileView();
+            } catch(error) { alert(error.message || 'Could not update profile.'); }
+        }
+
+        async function renderAdminDetailsTable() {
+            const body = document.getElementById('registeredUsersTableBody');
+            if (!body) return;
+            try {
+                const response = await fetch('/api/admin/users', { cache:'no-store' });
+                const data = await response.json().catch(()=>({}));
+                if (!response.ok || !data.success) throw new Error(data.message || 'Could not load members.');
+                const users = data.data || [];
+                if (!users.length) {
+                    body.innerHTML = `<tr><td colspan="7" class="p-4 text-center text-slate-500">No members have joined via the form yet.</td></tr>`;
+                    return;
+                }
+                body.innerHTML = users.map(u => `
+                    <tr class="hover:bg-amber-500/5 dark:hover:bg-slate-800/30">
+                        <td class="p-3 font-mono font-bold text-amber-700 dark:text-pink-500">${egsChatEscapeHtml(u.username)}</td>
+                        <td class="p-3 font-semibold">${egsChatEscapeHtml(u.name)}</td>
+                        <td class="p-3">${egsChatEscapeHtml(u.gender || 'N/A')}</td>
+                        <td class="p-3">${egsChatEscapeHtml(u.category || 'N/A')}</td>
+                        <td class="p-3">${egsChatEscapeHtml(u.email)}</td>
+                        <td class="p-3">${egsChatEscapeHtml(u.phone)}</td>
+                        <td class="p-3">${egsChatEscapeHtml(u.institution)}</td>
+                    </tr>
+                `).join('');
+            } catch(error) {
+                body.innerHTML = `<tr><td colspan="7" class="p-4 text-center text-slate-500">${egsChatEscapeHtml(error.message || 'Could not load members.')}</td></tr>`;
+            }
+        }
+
+        function renderContactDetails() {
+            const c = getStoredContact();
+            document.getElementById('displayContactPhone').innerText = c.phone;
+            document.getElementById('displayContactEmail').innerText = c.email;
+           
+            const linkedin = document.getElementById('displayContactLinkedin');
+            linkedin.innerText = c.linkedin;
+            linkedin.href = c.linkedin;
+            const whatsapp = document.getElementById('displayContactWhatsapp');
+            whatsapp.innerText = c.whatsapp;
+            whatsapp.href = c.whatsapp;
+            const github = document.getElementById('displayContactGithub');
+            github.innerText = c.github;
+            github.href = c.github;
+            document.getElementById('footerPhone').innerText = c.phone;
+            document.getElementById('footerEmail').innerText = c.email;
+            document.getElementById('footerLinkedin').href = c.linkedin;
+            document.getElementById('footerWhatsapp').href = c.whatsapp;
+            document.getElementById('footerGithub').href = c.github;
+            const editBtn = document.getElementById('adminEditContactBtn');
+            if (isAdminLoggedIn()) {
+                editBtn.classList.remove('hidden');
+            } else {
+                editBtn.classList.add('hidden');
+            }
+        }
+
+        function openContactCrudModal() {
+            const c = getStoredContact();
+            document.getElementById('crudContactPhone').value = c.phone;
+            document.getElementById('crudContactEmail').value = c.email;
+            document.getElementById('crudContactLinkedin').value = c.linkedin;
+            document.getElementById('crudContactWhatsapp').value = c.whatsapp;
+            document.getElementById('crudContactGithub').value = c.github;
+            document.getElementById('contactCrudModal').showModal();
+        }
+        function closeContactCrudModal() {
+            document.getElementById('contactCrudModal').close();
+        }
+        async function handleSaveContact(e) {
+            e.preventDefault();
+            const updated = {
+                phone: document.getElementById('crudContactPhone').value,
+                email: document.getElementById('crudContactEmail').value,
+                linkedin: document.getElementById('crudContactLinkedin').value,
+                whatsapp: document.getElementById('crudContactWhatsapp').value,
+                github: document.getElementById('crudContactGithub').value
+            };
+            await persistCloudState('contact', updated);
+            closeContactCrudModal();
+            renderContactDetails();
+            alert("Contact details updated successfully!");
+        }
+
+        // Community & Slider Member CRUD Logic
+        function renderCommunityMembers() {
+            const grid = document.getElementById('communityMembersGrid');
+            const members = getStoredCommunity();
+            const adminBtn = document.getElementById('adminAddMemberBtn');
+            if (isAdminLoggedIn()) {
+                adminBtn.classList.remove('hidden');
+            } else {
+                adminBtn.classList.add('hidden');
+            }
+            grid.innerHTML = members.map((m, idx) => `
+                <div class="glass-panel p-5 rounded-2xl space-y-3 flex flex-col justify-between hover:scale-[1.02] transition-transform">
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider bg-amber-500/10 text-amber-700 border border-amber-500/20 dark:bg-blue-500/10 dark:text-blue-400 dark:border-blue-500/20">${m.role}</span>
+                            <a href="${m.linkedin || '#'}" target="_blank" class="text-slate-400 hover:text-amber-600 dark:hover:text-blue-400"><i class="fa-brands fa-linkedin text-base"></i></a>
+                        </div>
+                        <div class="flex items-center gap-3 mb-3">
+                            <img src="${m.image || 'https://api.dicebear.com/7.x/avataaars/svg?seed=' + m.name}" alt="${m.name}" class="w-12 h-12 rounded-full object-cover border-2 border-amber-500/30">
+                            <div>
+                                <h3 class="font-bold text-base text-slate-800 dark:text-slate-100">${m.name}</h3>
+                                <p class="text-xs text-slate-500 dark:text-slate-400">${m.organization}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pt-3 border-t border-amber-900/10 dark:border-slate-800/60 text-[11px] text-slate-600 dark:text-slate-400 space-y-1">
+                        <p><i data-lucide="mail" class="w-3 h-3 inline mr-1 text-amber-600 dark:text-blue-400"></i> ${m.email}</p>
+                        <p><i data-lucide="phone" class="w-3 h-3 inline mr-1 text-amber-600 dark:text-blue-400"></i> ${m.phone}</p>
+                    </div>
+                    ${isAdminLoggedIn() ? `
+                        <div class="pt-2 border-t border-amber-900/10 dark:border-slate-800/60 flex items-center justify-end gap-2">
+                            <button onclick="openMemberCrudModal(${idx})" class="px-2.5 py-1 rounded-lg text-[11px] font-bold glass-panel hover:text-amber-600">Edit</button>
+                            <button onclick="handleDeleteMember(${idx})" class="px-2.5 py-1 rounded-lg text-[11px] font-bold glass-panel text-red-500 hover:bg-red-500/10">Remove</button>
+                        </div>
+                    ` : ''}
+                </div>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        function openMemberCrudModal(idx = null) {
+            const modal = document.getElementById('memberCrudModal');
+            const members = getStoredCommunity();
+            // Always clear the file picker and reset the preview before (re)populating
+            document.getElementById('crudMemberFile').value = '';
+            if (idx !== null) {
+                const m = members[idx];
+                document.getElementById('crudMemberIndex').value = idx;
+                document.getElementById('crudMemberExistingImage').value = m.image || '';
+                document.getElementById('crudMemberRole').value = m.role;
+                document.getElementById('crudMemberName').value = m.name;
+                document.getElementById('crudMemberOrg').value = m.organization;
+                document.getElementById('crudMemberEmail').value = m.email;
+                document.getElementById('crudMemberPhone').value = m.phone;
+                document.getElementById('crudMemberImagePreview').src = m.image || `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(m.name)}`;
+                document.getElementById('memberCrudModalTitle').innerText = 'Edit Member Details';
+            } else {
+                document.getElementById('crudMemberIndex').value = '';
+                document.getElementById('crudMemberExistingImage').value = '';
+                document.getElementById('crudMemberRole').value = '';
+                document.getElementById('crudMemberName').value = '';
+                document.getElementById('crudMemberOrg').value = '';
+                document.getElementById('crudMemberEmail').value = '';
+                document.getElementById('crudMemberPhone').value = '';
+                document.getElementById('crudMemberImagePreview').src = 'https://api.dicebear.com/7.x/avataaars/svg?seed=Preview';
+                document.getElementById('memberCrudModalTitle').innerText = 'Add Community Member';
+            }
+            modal.showModal();
+        }
+        function closeMemberCrudModal() {
+            document.getElementById('memberCrudModal').close();
+        }
+
+        // Convert uploaded member photos to a smaller Base64 image before saving.
+        // This avoids localStorage quota problems with large phone/camera photos.
+        function compressMemberImage(file, maxWidth = 1200, maxHeight = 1200, quality = 0.82) {
+            return new Promise((resolve, reject) => {
+                if (!file || !file.type.startsWith('image/')) {
+                    reject(new Error('Please select a valid image file.'));
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        let width = img.naturalWidth;
+                        let height = img.naturalHeight;
+
+                        const scale = Math.min(1, maxWidth / width, maxHeight / height);
+                        width = Math.max(1, Math.round(width * scale));
+                        height = Math.max(1, Math.round(height * scale));
+
+                        const canvas = document.createElement('canvas');
+                        canvas.width = width;
+                        canvas.height = height;
+
+                        const ctx = canvas.getContext('2d');
+                        if (!ctx) {
+                            reject(new Error('Your browser could not process this image.'));
+                            return;
+                        }
+
+                        // White background prevents transparent PNGs from becoming black
+                        // when converted to JPEG.
+                        ctx.fillStyle = '#ffffff';
+                        ctx.fillRect(0, 0, width, height);
+                        ctx.drawImage(img, 0, 0, width, height);
+
+                        const compressed = canvas.toDataURL('image/jpeg', quality);
+                        resolve(compressed);
+                    };
+                    img.onerror = () => reject(new Error('Could not load the selected image.'));
+                    img.src = event.target.result;
+                };
+                reader.onerror = () => reject(new Error('Could not read the selected image file.'));
+                reader.readAsDataURL(file);
+            });
+        }
+
+        // Live preview: show the selected image immediately.
+        // The actual saved image is compressed by handleSaveCommunityMember().
+        function handleMemberFilePreview(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            if (!file.type.startsWith('image/')) {
+                alert('Please select an image file.');
+                e.target.value = '';
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                document.getElementById('crudMemberImagePreview').src = event.target.result;
+            };
+            reader.onerror = () => {
+                alert('Could not preview the selected image. Please try another image.');
+                e.target.value = '';
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Saves a community member and safely stores the uploaded image.
+        // Large images are compressed first so one unusually large photo
+        // (such as a phone/camera photo) does not make localStorage fail.
+        async function handleSaveCommunityMember(e) {
+            e.preventDefault();
+
+            const idxVal = document.getElementById('crudMemberIndex').value;
+            const nameVal = document.getElementById('crudMemberName').value.trim();
+            const existingImage = document.getElementById('crudMemberExistingImage').value || '';
+            const fileInput = document.getElementById('crudMemberFile');
+            const saveButton = e.submitter || e.target.querySelector('button[type="submit"]');
+
+            if (!nameVal) {
+                alert('Please enter the member name.');
+                return;
+            }
+
+            // Prevent double-clicking Save while the image is being processed.
+            if (saveButton) {
+                saveButton.disabled = true;
+                saveButton.dataset.originalText = saveButton.innerText;
+                saveButton.innerText = 'Saving...';
+            }
+
+            try {
+                let imageUrl = null;
+
+                if (fileInput.files && fileInput.files[0]) {
+                    const compressedData = await compressMemberImage(fileInput.files[0]);
+                    const blob = await dataUrlToBlob(compressedData);
+                    imageUrl = await uploadImageToBackend(blob, fileInput.files[0].name || 'member.webp');
+                }
+
+                // Re-read the latest members list at save-time.
+                const members = getStoredCommunity();
+
+                const newM = {
+                    role: document.getElementById('crudMemberRole').value.trim(),
+                    name: nameVal,
+                    organization: document.getElementById('crudMemberOrg').value.trim(),
+                    email: document.getElementById('crudMemberEmail').value.trim(),
+                    phone: document.getElementById('crudMemberPhone').value.trim(),
+                    linkedin: "#",
+                    // New uploaded photo > existing photo > generated avatar
+                    image: imageUrl || existingImage || `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(nameVal)}`
+                };
+
+                if (idxVal !== '') {
+                    const idx = parseInt(idxVal, 10);
+
+                    if (!Number.isInteger(idx) || !members[idx]) {
+                        throw new Error('The selected member could not be found. Please close the form and try again.');
+                    }
+
+                    // Keep any fields that may exist on the original member object.
+                    members[idx] = { ...members[idx], ...newM };
+                } else {
+                    members.push(newM);
+                }
+
+                try {
+                    await persistCloudState('community', members);
+                } catch (storageError) {
+                    console.error('Community member save failed:', storageError);
+
+                    if (storageError && storageError.name === 'QuotaExceededError') {
+                        throw new Error(
+                            'The browser storage is full. Please remove an unused member/photo or clear old CloudVerse data, then try again.'
+                        );
+                    }
+
+                    throw new Error('The member could not be saved to browser storage. Please try again.');
+                }
+
+                closeMemberCrudModal();
+                renderCommunityMembers();
+                initLeadershipSlider();
+                alert(`${nameVal} has been saved successfully.`);
+            } catch (error) {
+                console.error(error);
+                alert(error.message || 'Could not save the member. Please try again.');
+            } finally {
+                if (saveButton) {
+                    saveButton.disabled = false;
+                    saveButton.innerText = saveButton.dataset.originalText || 'Save';
+                }
+            }
+        }
+
+        async function handleDeleteMember(idx) {
+            if (confirm("Are you sure you want to remove this member?")) {
+                const members = getStoredCommunity();
+                members.splice(idx, 1);
+                await persistCloudState('community', members);
+                renderCommunityMembers();
+                initLeadershipSlider();
+            }
+        }
+
+        // ==========================================
+        // GALLERY LOGIC & CAROUSEL CONTROLLERS
+        // ==========================================
+        function renderGalleryPage() {
+            const gallery = getStoredGallery();
+            const adminContainer = document.getElementById('adminGalleryActionBtnContainer');
+            const cardsContainer = document.getElementById('galleryEventCardsContainer');
+            const gridContainer = document.getElementById('adminGalleryGridContainer');
+            const adminSection = document.getElementById('adminGalleryManagementSection');
+            const countEl = document.getElementById('galleryEventCount');
+
+            const admin = isAdminLoggedIn();
+            if (adminSection) adminSection.classList.toggle('hidden', !admin);
+            if (admin) {
+                adminContainer.innerHTML = `
+                    <button onclick="openGalleryCrudModal()" class="px-5 py-2.5 rounded-xl font-bold text-xs btn-accent flex items-center gap-2 shadow-lg">
+                        <i data-lucide="plus-circle" class="w-4 h-4"></i> Add Event Collection
+                    </button>
+                `;
+            } else {
+                adminContainer.innerHTML = '';
+                if (gridContainer) gridContainer.innerHTML = '';
+            }
+
+            countEl.innerText = `${gallery.length} event${gallery.length === 1 ? '' : 's'}`;
+
+            if (gallery.length === 0) {
+                cardsContainer.innerHTML = `<div class="col-span-full glass-panel p-12 rounded-3xl text-center text-sm text-slate-500">No event photo collections available.</div>`;
+                gridContainer.innerHTML = `<div class="col-span-full glass-panel p-8 rounded-3xl text-center text-xs text-slate-500">No photo collections available. Admin can create one above.</div>`;
+                lucide.createIcons();
+                return;
+            }
+
+            cardsContainer.innerHTML = gallery.map(event => {
+                const cover = event.images && event.images.length ? event.images[0].url : '';
+                const imageCount = event.images ? event.images.length : 0;
+                return `
+                    <button type="button" onclick="openGalleryEventViewModal('${event.id}')" class="glass-panel rounded-3xl overflow-hidden text-left group hover:-translate-y-1 transition-all shadow-xl">
+                        <div class="relative h-52 bg-slate-900 overflow-hidden">
+                            ${cover ? `<img src="${cover}" alt="${escapeHtml(event.title)}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">` : `<div class="w-full h-full flex items-center justify-center text-slate-500"><i data-lucide="images" class="w-12 h-12"></i></div>`}
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent"></div>
+                            <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full text-[10px] font-bold bg-black/60 text-white backdrop-blur-sm">${escapeHtml(event.category)}</span>
+                            <span class="absolute bottom-3 right-3 px-2.5 py-1 rounded-full text-[10px] font-bold bg-amber-500 text-black">${imageCount} photo${imageCount === 1 ? '' : 's'}</span>
+                        </div>
+                        <div class="p-5 space-y-2">
+                            <h3 class="font-extrabold text-lg text-slate-800 dark:text-slate-100">${escapeHtml(event.title)}</h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 flex items-center gap-1.5"><i data-lucide="images" class="w-3.5 h-3.5"></i> Click to view all event photos</p>
+                        </div>
+                    </button>
+                `;
+            }).join('');
+
+            gridContainer.innerHTML = gallery.map(event => {
+                const cover = event.images && event.images.length ? event.images[0].url : '';
+                const imageCount = event.images ? event.images.length : 0;
+                return `
+                    <div class="glass-panel p-4 rounded-2xl space-y-3">
+                        <div class="h-40 rounded-xl overflow-hidden border border-amber-900/10 dark:border-slate-700/50 bg-slate-900">
+                            ${cover ? `<img src="${cover}" alt="${escapeHtml(event.title)}" class="w-full h-full object-cover">` : `<div class="w-full h-full flex items-center justify-center text-slate-500"><i data-lucide="images" class="w-10 h-10"></i></div>`}
+                        </div>
+                        <div>
+                            <span class="text-[10px] font-bold text-amber-600 dark:text-blue-400 uppercase">${escapeHtml(event.category)}</span>
+                            <h4 class="font-bold text-sm text-slate-800 dark:text-slate-100">${escapeHtml(event.title)}</h4>
+                            <p class="text-[11px] text-slate-500 mt-1">${imageCount} photo${imageCount === 1 ? '' : 's'} in this event</p>
+                        </div>
+                        ${isAdminLoggedIn() ? `
+                            <div class="grid grid-cols-2 gap-2 pt-2 border-t border-amber-900/10 dark:border-slate-800">
+                                <button onclick="openGalleryCrudModal('${event.id}')" class="px-3 py-2 rounded-lg text-xs font-bold glass-panel hover:text-amber-600 flex items-center justify-center gap-1"><i data-lucide="images-plus" class="w-3.5 h-3.5"></i> Manage Photos</button>
+                                <button onclick="openGalleryCrudModal('${event.id}', true)" class="px-3 py-2 rounded-lg text-xs font-bold glass-panel hover:text-amber-600 flex items-center justify-center gap-1"><i data-lucide="pencil" class="w-3.5 h-3.5"></i> Edit Event</button>
+                            </div>
+                            <button onclick="handleDeleteGalleryEvent('${event.id}')" class="w-full px-3 py-2 rounded-lg text-xs font-bold text-red-500 glass-panel hover:bg-red-500/10 flex items-center justify-center gap-1"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i> Delete Entire Event Collection</button>
+                        ` : ''}
+                    </div>
+                `;
+            }).join('');
+
+            lucide.createIcons();
+        }
+
+        function escapeHtml(value) {
+            return String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[char]));
+        }
+
+        function openGalleryEventViewModal(id) {
+            const event = getStoredGallery().find(item => item.id === id);
+            if (!event) return;
+            document.getElementById('galleryEventViewCategory').innerText = event.category;
+            document.getElementById('galleryEventViewTitle').innerText = event.title;
+            document.getElementById('galleryEventViewCount').innerText = `${event.images.length} photo${event.images.length === 1 ? '' : 's'} from this event`;
+            const container = document.getElementById('galleryEventImagesContainer');
+            container.innerHTML = event.images.length ? event.images.map((img, index) => `
+                <button type="button" onclick="openGalleryImageViewer('${event.id}', ${index})" class="relative aspect-video rounded-2xl overflow-hidden bg-black group border border-slate-700/40">
+                    <img src="${img.url}" alt="${escapeHtml(event.title)} photo ${index + 1}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                    <span class="absolute bottom-2 right-2 px-2 py-1 rounded-lg bg-black/60 text-white text-[10px]">${index + 1}</span>
+                </button>
+            `).join('') : `<p class="col-span-full text-center text-sm text-slate-500 py-10">No photos in this event yet.</p>`;
+            document.getElementById('galleryEventViewModal').showModal();
+            lucide.createIcons();
+        }
+
+        function closeGalleryEventViewModal() { document.getElementById('galleryEventViewModal').close(); }
+
+        function openGalleryImageViewer(eventId, index) {
+            const event = getStoredGallery().find(item => item.id === eventId);
+            if (!event || !event.images[index]) return;
+            document.getElementById('galleryViewerImage').src = event.images[index].url;
+            document.getElementById('galleryImageViewerModal').showModal();
+        }
+
+        function closeGalleryImageViewer() { document.getElementById('galleryImageViewerModal').close(); }
+
+        function openGalleryCrudModal(id = null, editDetails = false) {
+            const modal = document.getElementById('galleryCrudModal');
+            const gallery = getStoredGallery();
+            const title = document.getElementById('crudGalleryTitle');
+            const category = document.getElementById('crudGalleryCategory');
+            const fileInput = document.getElementById('crudGalleryFile');
+            const existing = document.getElementById('galleryExistingImagesPreview');
+
+            document.getElementById('galleryCrudForm').reset();
+            document.getElementById('crudGalleryId').value = '';
+            existing.innerHTML = '';
+
+            if (id) {
+                const event = gallery.find(g => g.id === id);
+                if (!event) return;
+                document.getElementById('crudGalleryId').value = event.id;
+                title.value = event.title;
+                category.value = event.category;
+                document.getElementById('galleryCrudModalTitle').innerText = editDetails ? 'Edit Event Details' : 'Manage Event Photos';
+                document.getElementById('galleryCrudModalDescription').innerText = editDetails ? 'Update the event title/category and optionally add more photos.' : 'Add more photos to this existing event card. Existing photos will remain.';
+                document.getElementById('galleryFileHelp').innerText = 'Select one or more new photos. They will be added to this event without deleting existing photos.';
+                existing.innerHTML = event.images.map((img, index) => `
+                    <div class="relative aspect-square rounded-lg overflow-hidden group">
+                        <img src="${img.url}" class="w-full h-full object-cover">
+                        <button type="button" onclick="handleDeleteGalleryPhoto('${event.id}', '${img.id}')" class="absolute top-1 right-1 p-1 rounded-full bg-red-500 text-white opacity-0 group-hover:opacity-100 transition-opacity" title="Delete photo"><i data-lucide="x" class="w-3 h-3"></i></button>
+                    </div>
+                `).join('');
+            } else {
+                document.getElementById('galleryCrudModalTitle').innerText = 'Add Event Photo Collection';
+                document.getElementById('galleryCrudModalDescription').innerText = 'Create an event card and add one or more photos.';
+                document.getElementById('galleryFileHelp').innerText = 'You can select multiple images at once. All selected images will belong to this event card.';
+            }
+            modal.showModal();
+            lucide.createIcons();
+        }
+
+        function closeGalleryCrudModal() { document.getElementById('galleryCrudModal').close(); }
+
+        // Compress gallery photos aggressively before storing them in localStorage.
+        // Gallery supports multiple photos per event, so keeping the original phone
+        // resolution can quickly exceed the browser's localStorage limit.
+        function compressGalleryImage(file, maxSize = 720, quality = 0.58) {
+            return new Promise((resolve, reject) => {
+                if (!file || !file.type || !file.type.startsWith('image/')) {
+                    reject(new Error('Please select a valid image file.'));
+                    return;
+                }
+                const reader = new FileReader();
+                reader.onerror = () => reject(new Error('Could not read the selected image.'));
+                reader.onload = e => {
+                    const img = new Image();
+                    img.onerror = () => reject(new Error('Selected file is not a valid image.'));
+                    img.onload = () => {
+                        try {
+                            const scale = Math.min(1, maxSize / Math.max(img.naturalWidth || img.width, img.naturalHeight || img.height));
+                            const canvas = document.createElement('canvas');
+                            canvas.width = Math.max(1, Math.round((img.naturalWidth || img.width) * scale));
+                            canvas.height = Math.max(1, Math.round((img.naturalHeight || img.height) * scale));
+                            const ctx = canvas.getContext('2d');
+                            if (!ctx) throw new Error('Your browser could not process this image.');
+                            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+                            // WebP is normally much smaller. Fall back to JPEG if unavailable.
+                            let data = canvas.toDataURL('image/webp', quality);
+                            if (!data || data.indexOf('data:image/webp') !== 0) {
+                                data = canvas.toDataURL('image/jpeg', quality);
+                            }
+                            resolve(data);
+                        } catch (err) {
+                            reject(err);
+                        }
+                    };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function getGalleryStorageSize(gallery) {
+            try {
+                return new Blob([JSON.stringify(gallery)]).size;
+            } catch (_) {
+                return 0;
+            }
+        }
+
+        function saveGalleryWithQuotaRetry(gallery) {
+            return persistCloudState('gallery', gallery);
+        }
+
+        async function handleSaveGalleryEvent(e) {
+            e.preventDefault();
+
+            const form = document.getElementById('galleryCrudForm');
+            const button = form.querySelector('button[type="submit"]');
+            const idVal = document.getElementById('crudGalleryId').value;
+            const fileInput = document.getElementById('crudGalleryFile');
+            const titleVal = document.getElementById('crudGalleryTitle').value.trim();
+            const categoryVal = document.getElementById('crudGalleryCategory').value.trim();
+
+            if (!titleVal || !categoryVal) {
+                alert('Please enter the event title and category.');
+                return;
+            }
+
+            const files = Array.from(fileInput.files || []).filter(file => file.type && file.type.startsWith('image/'));
+            if (!idVal && files.length === 0) {
+                alert('Please select at least one photo from your computer.');
+                return;
+            }
+
+            let gallery = getStoredGallery();
+            let event = idVal ? gallery.find(g => g.id === idVal) : null;
+            const isNew = !event;
+
+            // Work on a copy so a failed save does not partially change the existing event.
+            if (event) {
+                event = {
+                    ...event,
+                    images: Array.isArray(event.images) ? [...event.images] : []
+                };
+                const eventIndex = gallery.findIndex(g => g.id === idVal);
+                gallery[eventIndex] = event;
+                event.title = titleVal;
+                event.category = categoryVal;
+            } else {
+                event = {
+                    id: 'event_' + Date.now(),
+                    title: titleVal,
+                    category: categoryVal,
+                    images: []
+                };
+                gallery.push(event);
+            }
+
+            const originalText = button.innerHTML;
+            button.disabled = true;
+            button.innerHTML = files.length ? `Saving 0 / ${files.length} photos...` : 'Saving event...';
+
+            try {
+                for (let i = 0; i < files.length; i++) {
+                    const file = files[i];
+                    const compressed = await compressGalleryImage(file);
+                    const blob = await dataUrlToBlob(compressed);
+                    const imageUrl = await uploadImageToBackend(blob, file.name || `gallery-${i + 1}.webp`);
+                    event.images.push({
+                        id: `${event.id}_img_${Date.now()}_${i}_${Math.random().toString(36).slice(2, 8)}`,
+                        url: imageUrl
+                    });
+                    button.innerHTML = `Saving ${i + 1} / ${files.length} photos...`;
+                }
+
+                // Save only after every selected image has been successfully processed.
+                const saved = await saveGalleryWithQuotaRetry(gallery);
+                if (!saved) throw new Error('Could not save the gallery changes.');
+
+                closeGalleryCrudModal();
+                renderGalleryPage();
+                alert(isNew ? `Event created with ${event.images.length} photo${event.images.length === 1 ? '' : 's'}.` : `Event updated. It now contains ${event.images.length} photo${event.images.length === 1 ? '' : 's'}.`);
+            } catch (err) {
+                console.error('Gallery save error:', err);
+                alert(err.message || 'Could not save the selected photo(s). Please try smaller images or fewer photos at a time.');
+            } finally {
+                button.disabled = false;
+                button.innerHTML = originalText;
+            }
+        }
+
+        function handleDeleteGalleryPhoto(eventId, photoId) {
+            const gallery = getStoredGallery();
+            const event = gallery.find(g => g.id === eventId);
+            if (!event) return;
+            if (!confirm('Delete this photo from the event?')) return;
+            event.images = event.images.filter(img => img.id !== photoId);
+            saveStoredGallery(gallery);
+            openGalleryCrudModal(eventId);
+            renderGalleryPage();
+        }
+
+        function handleDeleteGalleryEvent(eventId) {
+            if (!confirm('Are you sure you want to delete this entire event and all its photos?')) return;
+            const gallery = getStoredGallery().filter(event => event.id !== eventId);
+            saveStoredGallery(gallery);
+            renderGalleryPage();
+        }
+
+        // Events CRUD Logic
+        function switchEventsTab(tab) {
+            activeEventsTab = tab;
+            document.getElementById('tabUpcomingBtn').className = tab === 'upcoming' ? 'px-6 py-2.5 rounded-xl font-bold text-sm btn-accent shadow-md' : 'px-6 py-2.5 rounded-xl font-bold text-sm glass-panel';
+            document.getElementById('tabPastBtn').className = tab === 'past' ? 'px-6 py-2.5 rounded-xl font-bold text-sm btn-accent shadow-md' : 'px-6 py-2.5 rounded-xl font-bold text-sm glass-panel';
+            renderEventsPage();
+        }
+        function renderEventsPage() {
+            const events = getStoredEvents();
+            const filtered = events.filter(e => e.category === activeEventsTab);
+            const container = document.getElementById('eventsListContainer');
+            const adminContainer = document.getElementById('adminEventActionBtnContainer');
+            if (isAdminLoggedIn()) {
+                adminContainer.innerHTML = `
+                    <button onclick="openEventCrudModal()" class="px-5 py-2.5 rounded-xl font-bold text-xs btn-accent flex items-center gap-2 shadow-lg">
+                        <i data-lucide="plus-circle" class="w-4 h-4"></i> Add New Event
+                    </button>
+                `;
+            } else {
+                adminContainer.innerHTML = '';
+            }
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="glass-panel p-12 rounded-3xl text-center space-y-2">
+                        <p class="text-lg font-bold text-slate-700 dark:text-slate-300">No ${activeEventsTab} events listed yet.</p>
+                        <p class="text-xs text-slate-500">Check back later or log in as Admin to post a new event.</p>
+                    </div>
+                `;
+                lucide.createIcons();
+                return;
+            }
+            container.innerHTML = filtered.map(e => `
+                <div class="glass-panel p-6 rounded-3xl grid md:grid-cols-12 gap-6 items-center">
+                    <div class="md:col-span-7 space-y-3">
+                        <div class="flex items-center gap-2">
+                            <span class="px-3 py-1 rounded-full text-[11px] font-bold bg-amber-500/10 text-amber-700 border border-amber-500/20 dark:bg-blue-500/10 dark:text-blue-400 dark:border-blue-500/20">${e.mode}</span>
+                            <span class="text-xs text-slate-500 dark:text-slate-400"><i data-lucide="calendar" class="w-3.5 h-3.5 inline mr-1"></i> ${e.date} (${e.time})</span>
+                        </div>
+                        <h3 class="text-xl md:text-2xl font-bold text-slate-800 dark:text-slate-100">${e.title}</h3>
+                        <div class="space-y-1 text-xs text-slate-600 dark:text-slate-300">
+                            <p><strong class="text-amber-700 dark:text-blue-400">Chief Guest / Speaker:</strong> ${e.chiefGuest}</p>
+                            <p><strong class="text-amber-700 dark:text-blue-400">Topic:</strong> ${e.topic}</p>
+                            <p><strong class="text-amber-700 dark:text-blue-400">Participation Count:</strong> ${e.participants}</p>
+                        </div>
+                       
+                        ${isAdminLoggedIn() ? `
+                            <div class="pt-3 border-t border-amber-900/10 dark:border-slate-800/60 flex items-center gap-3">
+                                <button onclick="openEventCrudModal('${e.id}')" class="px-3 py-1.5 rounded-lg text-xs font-bold glass-panel hover:text-amber-600 dark:hover:text-blue-400 flex items-center gap-1">
+                                    <i data-lucide="edit" class="w-3.5 h-3.5"></i> Edit
+                                </button>
+                                <button onclick="handleDeleteEvent('${e.id}')" class="px-3 py-1.5 rounded-lg text-xs font-bold glass-panel text-red-500 hover:bg-red-500/10 flex items-center gap-1">
+                                    <i data-lucide="trash-2" class="w-3.5 h-3.5"></i> Delete
+                                </button>
+                            </div>
+                        ` : ''}
+                    </div>
+                    <div class="md:col-span-5 h-48 rounded-2xl overflow-hidden border border-amber-900/10 dark:border-slate-700/50">
+                        <img src="${e.posterUrl}" alt="${e.title}" class="w-full h-full object-cover">
+                    </div>
+                </div>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        function openEventCrudModal(eventId = null) {
+            const modal = document.getElementById('eventCrudModal');
+            const events = getStoredEvents();
+            if (eventId) {
+                const e = events.find(item => item.id === eventId);
+                if (e) {
+                    document.getElementById('crudEventId').value = e.id;
+                    document.getElementById('crudTitle').value = e.title;
+                    document.getElementById('crudCategory').value = e.category;
+                    document.getElementById('crudMode').value = e.mode;
+                    document.getElementById('crudDate').value = e.date;
+                    document.getElementById('crudTime').value = e.time;
+                    document.getElementById('crudChiefGuest').value = e.chiefGuest;
+                    document.getElementById('crudTopic').value = e.topic;
+                    document.getElementById('crudParticipants').value = e.participants;
+                    document.getElementById('crudPosterUrl').value = e.posterUrl;
+                    document.getElementById('eventCrudModalTitle').innerText = 'Edit Event Details';
+                }
+            } else {
+                document.getElementById('eventCrudForm').reset();
+                document.getElementById('crudEventId').value = '';
+                document.getElementById('eventCrudModalTitle').innerText = 'Add New Event';
+            }
+            modal.showModal();
+        }
+        function closeEventCrudModal() {
+            document.getElementById('eventCrudModal').close();
+        }
+        async function handleSaveEvent(e) {
+            e.preventDefault();
+            const events = getStoredEvents();
+            const idVal = document.getElementById('crudEventId').value;
+            const newObj = {
+                id: idVal || 'evt_' + Date.now(),
+                title: document.getElementById('crudTitle').value,
+                category: document.getElementById('crudCategory').value,
+                mode: document.getElementById('crudMode').value,
+                date: document.getElementById('crudDate').value,
+                time: document.getElementById('crudTime').value,
+                chiefGuest: document.getElementById('crudChiefGuest').value,
+                topic: document.getElementById('crudTopic').value,
+                participants: document.getElementById('crudParticipants').value,
+                posterUrl: document.getElementById('crudPosterUrl').value
+            };
+            if (idVal) {
+                const idx = events.findIndex(item => item.id === idVal);
+                if (idx !== -1) events[idx] = newObj;
+            } else {
+                events.push(newObj);
+            }
+            await persistCloudState('events', events);
+            closeEventCrudModal();
+            renderEventsPage();
+            renderHomeUpcomingHighlight();
+            updateCounterDisplay();
+        }
+        async function handleDeleteEvent(eventId) {
+            if (confirm("Are you sure you want to delete this event?")) {
+                let events = getStoredEvents();
+                events = events.filter(e => e.id !== eventId);
+                await persistCloudState('events', events);
+                renderEventsPage();
+                renderHomeUpcomingHighlight();
+                updateCounterDisplay();
+            }
+        }
+
+        // Home Banner Dynamic Highlight
+        function renderHomeUpcomingHighlight() {
+            const events = getStoredEvents();
+            const upcomingList = events.filter(e => e.category === 'upcoming');
+            const highlightContainer = document.getElementById('homeUpcomingHighlight');
+            if (upcomingList.length > 0) {
+                const featured = upcomingList[0];
+                highlightContainer.innerHTML = `
+                    <div class="glass-panel p-6 md:p-8 rounded-3xl grid md:grid-cols-2 gap-8 items-center border-2 border-amber-500/30 dark:border-blue-500/30">
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-2">
+                                <span class="px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-500 border border-emerald-500/20">${featured.mode}</span>
+                                <span class="text-xs text-slate-500 dark:text-slate-400"><i data-lucide="calendar" class="w-3.5 h-3.5 inline mr-1"></i> ${featured.date}</span>
+                            </div>
+                            <h3 class="text-2xl md:text-3xl font-extrabold text-gradient">${featured.title}</h3>
+                            <div class="space-y-1 text-xs text-slate-600 dark:text-slate-300">
+                                <p><strong class="text-amber-700 dark:text-blue-400">Chief Guest:</strong> ${featured.chiefGuest}</p>
+                                <p><strong class="text-amber-700 dark:text-blue-400">Topic:</strong> ${featured.topic}</p>
+                            </div>
+                            <div class="pt-2 flex items-center justify-between">
+                                <span class="text-xs font-bold text-slate-500 dark:text-slate-400"><i data-lucide="clock" class="w-3.5 h-3.5 inline mr-1 text-amber-600 dark:text-blue-500"></i> ${featured.time}</span>
+                                <button onclick="handleHeroPrimaryAction()" class="px-6 py-2.5 rounded-xl text-xs font-bold btn-accent">Register Now</button>
+                            </div>
+                        </div>
+                        <div class="relative overflow-hidden rounded-2xl border border-amber-900/10 dark:border-slate-700/50 aspect-video md:aspect-auto h-64">
+                            <img src="${featured.posterUrl}" alt="${featured.title}" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                `;
+            } else {
+                highlightContainer.innerHTML = `
+                    <div class="glass-panel p-10 rounded-3xl text-center space-y-3 border border-amber-900/10 dark:border-slate-700/50">
+                        <i data-lucide="calendar-off" class="w-12 h-12 text-slate-400 dark:text-slate-500 mx-auto"></i>
+                        <h3 class="text-2xl font-bold text-gradient">No Upcoming Events Right Now — Stay Tuned!</h3>
+                    </div>
+                `;
+            }
+            lucide.createIcons();
+        }
+
+        function handleHeroPrimaryAction() {
+            if (getActiveUser()) {
+                navigateTo('events');
+            } else {
+                openSignInModal();
+            }
+        }
+        async function updateCounterDisplay() {
+            const events = getStoredEvents();
+            document.getElementById('eventCounter').innerText = events.length;
+            try {
+                const response = await fetch('/api/stats', { cache:'no-store' });
+                const data = await response.json();
+                const totalCount = 1250 + Number(data.userCount || 0);
+                document.getElementById('memberCounter').innerText = totalCount.toLocaleString() + '+';
+                document.getElementById('communityMemberCountDisplay').innerText = totalCount.toLocaleString() + '+';
+            } catch (_) {
+                const users = getRegisteredUsers();
+                const totalCount = 1250 + users.length;
+                document.getElementById('memberCounter').innerText = totalCount.toLocaleString() + '+';
+                document.getElementById('communityMemberCountDisplay').innerText = totalCount.toLocaleString() + '+';
+            }
+        }
+        function triggerAvatarUpload() {
+            document.getElementById('avatarFileInput').click();
+        }
+        function handleAvatarFileSelect(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    document.getElementById('profileAvatar').src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Leadership & Advisors Slider Script Controls & Admin Editing Functions
+        function initLeadershipSlider() {
+            const track = document.getElementById('leadershipSliderTrack');
+            const dotsContainer = document.getElementById('sliderDotsContainer');
+            const members = getStoredCommunity();
+            // Filter key leaders and advisors for showcase
+            const highlightRoles = ['President', 'Vice President', 'Treasurer', 'Faculty Convener', 'Industry Expert', 'Alumni Advisor'];
+            const showcaseMembers = members.filter(m => highlightRoles.includes(m.role));
+            const listToUse = showcaseMembers.length > 0 ? showcaseMembers : members;
+
+            track.innerHTML = listToUse.map((m, idx) => `
+                <div class="min-w-full flex flex-col items-center text-center space-y-4 px-2">
+                    <img src="${m.image}" alt="${m.name}" class="w-24 h-24 rounded-full object-cover border-4 border-amber-500/40 shadow-xl">
+                    <div class="space-y-1">
+                        <span class="px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-amber-500/10 text-amber-700 dark:bg-blue-500/10 dark:text-blue-400 border border-amber-500/20">${m.role}</span>
+                        <h3 class="text-xl font-bold text-slate-800 dark:text-slate-100">${m.name}</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">${m.organization}</p>
+                    </div>
+                    <div class="text-xs text-slate-600 dark:text-slate-300 space-y-1 pt-2 border-t border-amber-900/10 dark:border-slate-800 w-full">
+                        <p><i data-lucide="mail" class="w-3.5 h-3.5 inline mr-1 text-amber-600 dark:text-blue-500"></i> ${m.email}</p>
+                        <p><i data-lucide="phone" class="w-3.5 h-3.5 inline mr-1 text-amber-600 dark:text-blue-500"></i> ${m.phone}</p>
+                    </div>
+                </div>
+            `).join('');
+
+            dotsContainer.innerHTML = listToUse.map((_, idx) => `
+                <button onclick="goToSliderIndex(${idx})" class="w-2.5 h-2.5 rounded-full transition-all ${idx === currentSlideIndex ? 'bg-amber-500 w-6' : 'bg-slate-400/50'}"></button>
+            `).join('');
+
+            track.style.transform = `translateX(-${currentSlideIndex * 100}%)`;
+            startSliderInterval(listToUse.length);
+            lucide.createIcons();
+        }
+
+        function goToSliderIndex(idx) {
+            currentSlideIndex = idx;
+            const track = document.getElementById('leadershipSliderTrack');
+            const dotsContainer = document.getElementById('sliderDotsContainer');
+            const members = getStoredCommunity();
+            const highlightRoles = ['President', 'Vice President', 'Treasurer', 'Faculty Convener', 'Industry Expert', 'Alumni Advisor'];
+            const showcaseMembers = members.filter(m => highlightRoles.includes(m.role));
+            const listToUse = showcaseMembers.length > 0 ? showcaseMembers : members;
+
+            track.style.transform = `translateX(-${currentSlideIndex * 100}%)`;
+            Array.from(dotsContainer.children).forEach((btn, i) => {
+                btn.className = `w-2.5 h-2.5 rounded-full transition-all ${i === currentSlideIndex ? 'bg-amber-500 w-6' : 'bg-slate-400/50'}`;
+            });
+        }
+
+        function startSliderInterval(totalLength) {
+            if (sliderInterval) clearInterval(sliderInterval);
+            sliderInterval = setInterval(() => {
+                if (totalLength > 0) {
+                    currentSlideIndex = (currentSlideIndex + 1) % totalLength;
+                    goToSliderIndex(currentSlideIndex);
+                }
+            }, 4000);
+        }
+
+        async function handleSiteLogoClick(event) {
+            if (event) event.stopPropagation();
+            if (event && event.target && event.target.closest('#siteLogoEditBtn')) return;
+
+            const logo = await getStoredSiteLogo();
+            const image = document.getElementById('siteLogoViewerImage');
+            const viewer = document.getElementById('siteLogoViewerModal');
+            if (!image || !viewer) {
+                alert('Logo viewer could not be opened. Please refresh the page.');
+                return;
+            }
+
+            image.src = logo;
+            image.onerror = () => { image.src = DEFAULT_SITE_LOGO; };
+            viewer.showModal();
+            lucide.createIcons();
+        }
+
+        function closeSiteLogoViewer() {
+            const viewer = document.getElementById('siteLogoViewerModal');
+            if (viewer && viewer.open) viewer.close();
+        }
+
+        // Close the logo viewer when the user clicks outside the image.
+        document.addEventListener('click', function(e) {
+            const viewer = document.getElementById('siteLogoViewerModal');
+            if (!viewer || !viewer.open) return;
+            if (e.target === viewer) closeSiteLogoViewer();
+        });
+
+        async function openSiteLogoModal() {
+            if (!isAdminLoggedIn()) { alert('Only Admin can edit the logo.'); return; }
+            document.getElementById('siteLogoFile').value = '';
+            document.getElementById('siteLogoModalPreview').src = await getStoredSiteLogo();
+            document.getElementById('siteLogoModal').showModal();
+            lucide.createIcons();
+        }
+
+        function closeSiteLogoModal() { document.getElementById('siteLogoModal').close(); }
+
+        function previewSiteLogo(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            if (!file.type.startsWith('image/')) { alert('Please select an image file.'); e.target.value = ''; return; }
+            const reader = new FileReader();
+            reader.onload = ev => document.getElementById('siteLogoModalPreview').src = ev.target.result;
+            reader.readAsDataURL(file);
+        }
+
+        function compressSiteLogo(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onerror = () => reject(new Error('Could not read the logo file.'));
+                reader.onload = ev => {
+                    const img = new Image();
+                    img.onerror = () => reject(new Error('The selected logo is not a valid image.'));
+                    img.onload = () => {
+                        const max = 600;
+                        const scale = Math.min(1, max / Math.max(img.width, img.height));
+                        const canvas = document.createElement('canvas');
+                        canvas.width = Math.max(1, Math.round(img.width * scale));
+                        canvas.height = Math.max(1, Math.round(img.height * scale));
+                        const ctx = canvas.getContext('2d');
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                        canvas.toBlob(blob => {
+                            if (!blob) { reject(new Error('Could not process the logo image.')); return; }
+                            resolve(blob);
+                        }, 'image/webp', 0.85);
+                    };
+                    img.src = ev.target.result;
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        async function handleSaveSiteLogo(e) {
+            e.preventDefault();
+            if (!isAdminLoggedIn()) { alert('Only Admin can edit the logo.'); return; }
+            const file = document.getElementById('siteLogoFile').files[0];
+            if (!file) { alert('Please select a logo image.'); return; }
+            try {
+                const logoBlob = await compressSiteLogo(file);
+                await saveSiteLogoBlob(logoBlob);
+                await renderSiteLogo();
+                closeSiteLogoModal();
+                alert('Website logo saved successfully. It will remain after refresh.');
+            } catch (err) {
+                alert(err.message || 'Could not save the logo.');
+            }
+        }
+
+        async function resetSiteLogo() {
+            if (!confirm('Reset the website logo to the default pink logo?')) return;
+            await deleteSiteLogoBlob();
+            await renderSiteLogo();
+            document.getElementById('siteLogoModalPreview').src = DEFAULT_SITE_LOGO;
+            document.getElementById('siteLogoFile').value = '';
+        }
+
+        function renderSliderMetadata() {
+            const meta = getSliderMetadata();
+            document.getElementById('leadershipTagText').innerText = meta.tagText;
+            document.getElementById('leadershipTitleText').innerText = meta.titleText;
+        }
+
+        async function promptEditLeadershipTag() {
+            if (!isAdminLoggedIn()) {
+                alert("Only Admin can edit this section.");
+                return;
+            }
+            const meta = getSliderMetadata();
+            const newVal = prompt("Enter new Showcase Tag text:", meta.tagText);
+            if (newVal) {
+                meta.tagText = newVal;
+                await persistCloudState('slider_metadata', meta);
+                renderSliderMetadata();
+            }
+        }
+
+        async function promptEditLeadershipTitle() {
+            if (!isAdminLoggedIn()) {
+                alert("Only Admin can edit this section.");
+                return;
+            }
+            const meta = getSliderMetadata();
+            const newVal = prompt("Enter new Section Title text:", meta.titleText);
+            if (newVal) {
+                meta.titleText = newVal;
+                await persistCloudState('slider_metadata', meta);
+                renderSliderMetadata();
+            }
+        }
+
+
+        // ================= EGS PILLAY AI CHATBOT =================
+        const EGS_CHAT_API_ENDPOINT = '/api/chat';
+        const EGS_CHAT_STORAGE_KEY = 'CloudVerse_EGS_Chat_History_v1';
+        const EGS_CHAT_WELCOME = "Hello! 👋 I'm the E.G.S. Pillay College Assistant. I can help you with information about E.G.S. Pillay Engineering College, including courses, departments, admissions, placements, facilities, and more. What would you like to know?";
+        let egsChatHistory = [];
+        let egsChatBusy = false;
+
+        function egsChatEscapeHtml(value) {
+            return String(value ?? '').replace(/[&<>"']/g, char => ({
+                '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#039;'
+            }[char]));
+        }
+
+        function egsChatFormatMessage(value) {
+            const escaped = egsChatEscapeHtml(value);
+            const withLinks = escaped.replace(
+                /(https?:\/\/[^\s<]+)/g,
+                '<a class="egs-source-link" href="$1" target="_blank" rel="noopener noreferrer">Visit Official EGSPEC Website</a>'
+            );
+            return withLinks
+                .split(/\n{2,}/)
+                .map(part => `<p>${part.replace(/\n/g, '<br>')}</p>`)
+                .join('');
+        }
+
+        function egsChatRender() {
+            const container = document.getElementById('egsChatMessages');
+            if (!container) return;
+            container.innerHTML = egsChatHistory.map(msg => {
+                const isUser = msg.role === 'user';
+                return `
+                    <div class="egs-chat-row ${isUser ? 'user' : 'bot'}">
+                        ${isUser ? '' : '<div class="egs-mini-avatar" aria-hidden="true"><i data-lucide="bot" class="w-3.5 h-3.5"></i></div>'}
+                        <div class="egs-chat-bubble">${egsChatFormatMessage(msg.content)}</div>
+                    </div>
+                `;
+            }).join('');
+            if (egsChatBusy) {
+                container.insertAdjacentHTML('beforeend', `
+                    <div class="egs-chat-row bot" id="egsChatTypingRow">
+                        <div class="egs-mini-avatar" aria-hidden="true"><i data-lucide="bot" class="w-3.5 h-3.5"></i></div>
+                        <div class="egs-chat-bubble">
+                            <span>EGS College Assistant is typing...</span>
+                            <span class="egs-typing" aria-hidden="true"><span></span><span></span><span></span></span>
+                        </div>
+                    </div>
+                `);
+            }
+            lucide.createIcons();
+            requestAnimationFrame(() => { container.scrollTop = container.scrollHeight; });
+        }
+
+        function egsChatSaveHistory() {
+            try { sessionStorage.setItem(EGS_CHAT_STORAGE_KEY, JSON.stringify(egsChatHistory.slice(-20))); } catch (_) {}
+        }
+
+        function egsChatLoadHistory() {
+            try {
+                const stored = JSON.parse(sessionStorage.getItem(EGS_CHAT_STORAGE_KEY) || '[]');
+                if (Array.isArray(stored) && stored.length) egsChatHistory = stored;
+            } catch (_) {}
+            if (!egsChatHistory.length) egsChatHistory = [{ role:'assistant', content: EGS_CHAT_WELCOME }];
+            egsChatRender();
+        }
+
+        function egsChatToggle(open) {
+            const panel = document.getElementById('egsChatbotPanel');
+            const button = document.getElementById('egsChatbotToggle');
+            const shouldOpen = typeof open === 'boolean' ? open : !panel.classList.contains('open');
+            panel.classList.toggle('open', shouldOpen);
+            panel.setAttribute('aria-hidden', String(!shouldOpen));
+            button.setAttribute('aria-expanded', String(shouldOpen));
+            if (shouldOpen) {
+                document.getElementById('egsChatbotInput').focus();
+                requestAnimationFrame(() => {
+                    const box = document.getElementById('egsChatMessages');
+                    box.scrollTop = box.scrollHeight;
+                });
+            }
+        }
+
+        function egsChatClear() {
+            egsChatHistory = [{ role:'assistant', content: EGS_CHAT_WELCOME }];
+            try { sessionStorage.removeItem(EGS_CHAT_STORAGE_KEY); } catch (_) {}
+            egsChatRender();
+        }
+
+        async function egsChatSend(question) {
+            const cleaned = String(question || '').trim();
+            if (!cleaned || egsChatBusy) return;
+
+            egsChatHistory.push({ role:'user', content: cleaned });
+            egsChatBusy = true;
+            egsChatRender();
+
+            const input = document.getElementById('egsChatbotInput');
+            input.value = '';
+            input.style.height = 'auto';
+
+            try {
+                const response = await fetch(EGS_CHAT_API_ENDPOINT, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        messages: egsChatHistory.slice(-12)
+                    })
+                });
+
+                let data = {};
+                try { data = await response.json(); } catch (_) {}
+
+                if (!response.ok || !data.answer) {
+                    throw new Error(data.message || `Chat request failed (${response.status}).`);
+                }
+
+                egsChatHistory.push({
+                    role:'assistant',
+                    content: String(data.answer)
+                });
+                egsChatSaveHistory();
+            } catch (error) {
+                console.error('EGS chatbot:', error);
+                egsChatHistory.push({
+                    role:'assistant',
+                    content:`${error?.message || "I'm having trouble accessing the college information right now."}\n\nPlease try again in a moment or visit the official E.G.S. Pillay Engineering College website: https://egspec.org/`
+                });
+            } finally {
+                egsChatBusy = false;
+                egsChatRender();
+            }
+        }
+
+        function initEGSPillayChatbot() {
+            const toggle = document.getElementById('egsChatbotToggle');
+            const close = document.getElementById('egsChatCloseBtn');
+            const clear = document.getElementById('egsChatClearBtn');
+            const form = document.getElementById('egsChatForm');
+            const input = document.getElementById('egsChatbotInput');
+
+            if (!toggle || !close || !clear || !form || !input) return;
+
+            egsChatLoadHistory();
+            toggle.addEventListener('click', () => egsChatToggle());
+            close.addEventListener('click', () => egsChatToggle(false));
+            clear.addEventListener('click', egsChatClear);
+
+            form.addEventListener('submit', event => {
+                event.preventDefault();
+                egsChatSend(input.value);
+            });
+
+            input.addEventListener('keydown', event => {
+                if (event.key === 'Enter' && !event.shiftKey) {
+                    event.preventDefault();
+                    form.requestSubmit();
+                }
+            });
+
+            input.addEventListener('input', () => {
+                input.style.height = 'auto';
+                input.style.height = Math.min(input.scrollHeight, 100) + 'px';
+            });
+
+            document.querySelectorAll('#egsChatQuickQuestions .egs-quick-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    egsChatSend(btn.dataset.question || btn.innerText);
+                });
+            });
+
+            document.addEventListener('keydown', event => {
+                if (event.key === 'Escape') {
+                    const panel = document.getElementById('egsChatbotPanel');
+                    if (panel && panel.classList.contains('open')) egsChatToggle(false);
+                }
+            });
+        }
+        // ================= END EGS PILLAY AI CHATBOT =================
+
+        async function handleContactSubmit(e) {
+            e.preventDefault();
+            const form = e.target;
+            const fields = form.querySelectorAll('input, textarea, select');
+            const payload = {};
+            fields.forEach(field => { if (field.name) payload[field.name] = field.value; });
+            // Fallback to common IDs if name attributes are not present.
+            payload.name = payload.name || document.getElementById('contactName')?.value || '';
+            payload.email = payload.email || document.getElementById('contactEmail')?.value || '';
+            payload.subject = payload.subject || document.getElementById('contactSubject')?.value || '';
+            payload.message = payload.message || document.getElementById('contactMessage')?.value || '';
+            try {
+                const response = await fetch('/api/contact',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+                const data=await response.json().catch(()=>({}));
+                if (!response.ok || !data.success) throw new Error(data.message || 'Could not save your message.');
+                alert("Thank you! Your message has been sent successfully to CloudVerse Team.");
+                form.reset();
+            } catch(error) { alert(error.message || 'Could not send your message. Please try again.'); }
+        }
+    </script>
+</body>
+</html>

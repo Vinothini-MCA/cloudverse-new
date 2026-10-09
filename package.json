@@ -1,0 +1,19 @@
+{
+  "name": "egspec-college-assistant",
+  "version": "1.0.0",
+  "private": true,
+  "description": "E.G.S. Pillay Engineering College chatbot backend",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.24.1",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "openai": "^5.0.0"
+  }
+}
