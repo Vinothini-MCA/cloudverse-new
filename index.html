@@ -1745,9 +1745,11 @@
             const whatsapp = document.getElementById('displayContactWhatsapp');
             whatsapp.innerText = c.whatsapp;
             whatsapp.href = c.whatsapp;
-            const github = document.getElementById('displayContactGithub');
-            github.innerText = c.github;
-            github.href = c.github;
+            const instagram = document.getElementById('displayContactInstagram');
+if (instagram) {
+    instagram.innerText = 'instagram.com/cloudverse';
+    instagram.href = 'https://www.instagram.com/';
+}
             document.getElementById('footerPhone').innerText = c.phone;
             document.getElementById('footerEmail').innerText = c.email;
             document.getElementById('footerLinkedin').href = c.linkedin;
